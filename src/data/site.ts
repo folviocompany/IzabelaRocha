@@ -44,10 +44,10 @@ export const site = {
   // TODO: registro profissional real
   register: "Biomédica Esteta, CRBM 0.0000",
 
-  // TODO: números reais da profissional
   stats: [
+    { prefix: "+", value: 2500, decimals: 0, label: "pacientes atendidos" },
+    // TODO: confirmar estes dois números com a cliente
     { prefix: "+", value: 10, decimals: 0, label: "anos de experiência" },
-    { prefix: "+", value: 2000, decimals: 0, label: "procedimentos realizados" },
     { prefix: "", value: 5, decimals: 1, label: "avaliação das pacientes" },
   ],
 };
@@ -62,7 +62,9 @@ export function waLink(message: string = site.whatsappMessage): string {
 // ------------------------------------------------------------
 export const images = {
   hero: "https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=1100&q=80",
-  about: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=700&q=80",
+  // Fotos reais da Dra. — salvar os arquivos em public/ com estes nomes exatos
+  about: "/dra-izabela.jpg", // retrato (foto vertical)
+  atendimento: "/dra-atendimento.jpg", // Dra. em atendimento
   facial: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=900&q=80",
   corporal: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=80",
   ambiente1: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=1200&q=80",
@@ -203,7 +205,7 @@ export const hifu = {
   title: "Sonofocus HIFU: lifting sem cortes nem agulhas",
   intro:
     "O Sonofocus HIFU utiliza ultrassom microfocado para tratar as camadas profundas da pele com segurança. Ele contrai as fibras de colágeno já existentes e estimula a produção de colágeno novo, unindo efeito lifting imediato a resultados que evoluem por meses.",
-  image: images.facial,
+  image: images.atendimento,
   advantages: [
     { title: "Não invasivo", text: "Sem cortes, cicatrizes ou anestesia geral." },
     { title: "Retorno imediato", text: "Você volta à rotina no mesmo dia, sem recuperação." },
@@ -221,6 +223,26 @@ export const hifu = {
     { title: "Redução de medidas", text: "Trata a gordura localizada com resultado definitivo." },
     { title: "Tratamento da celulite", text: "Melhora o aspecto de casca de laranja nas coxas e glúteos." },
     { title: "Firmeza corporal", text: "Combate a flacidez no abdômen, nos braços e em outras áreas." },
+  ],
+};
+
+// ------------------------------------------------------------
+// Sobre a profissional — história real da Dra. (primeira pessoa)
+// ------------------------------------------------------------
+export const about = {
+  eyebrow: "Sobre a profissional",
+  heading: "Prazer, sou a Dra. Izabela",
+  paragraphs: [
+    "Aos 17 anos, deixei Anastácio, no Mato Grosso do Sul, minha família e tudo o que conhecia para correr atrás de um sonho na área da saúde. Aos 20, me formei. Mas o diploma nunca foi o fim da jornada para mim, e sim o primeiro passo.",
+    "Durante um ano e meio, atuei na rotina de cirurgias plásticas, acompanhando cada etapa do pós-operatório. Foi ali que aprofundei meu olhar sobre anatomia facial, cicatrização e a importância de um cuidado técnico e individualizado para cada paciente.",
+    "Desde então, nunca parei de estudar. Acredito em uma estética sofisticada, natural e personalizada, capaz de valorizar a beleza de cada pessoa sem apagar a sua identidade. Cada planejamento é único, porque cada história também é.",
+  ],
+  quote: "Eu não transformo rostos. Revelo identidades.",
+  credentials: [
+    "Vivência de um ano e meio em cirurgia plástica e pós-operatório",
+    "Especializada em harmonização facial e gerenciamento de pele",
+    "Aperfeiçoamento contínuo em cursos e congressos",
+    "Mais de 2.500 pacientes atendidos",
   ],
 };
 
