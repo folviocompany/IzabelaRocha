@@ -1,0 +1,26 @@
+---
+const items = [
+  "Toxina Botulínica",
+  "Preenchimento Labial",
+  "Bioestimulador de Colágeno",
+  "Skinbooster",
+  "Limpeza de Pele",
+  "Microagulhamento",
+  "Resultados Naturais",
+];
+---
+
+<div class="grain relative overflow-hidden border-y border-gold-500/20 bg-wine-900 py-4" aria-hidden="true">
+  <div class="marquee-track">
+    {[0, 1].map(() => (
+      <div class="flex shrink-0 items-center">
+        {items.map((item) => (
+          <span class="flex items-center gap-7 pr-7 text-[0.72rem] font-medium tracking-[0.35em] whitespace-nowrap text-gold-300/75 uppercase">
+            {item}
+            <span class="text-[0.6rem] text-gold-500">✦</span>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

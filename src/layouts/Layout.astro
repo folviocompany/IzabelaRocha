@@ -64,10 +64,16 @@ const jsonLd = JSON.stringify({
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body class="bg-cream font-sans text-ink antialiased">
+    <div id="scroll-progress" aria-hidden="true"></div>
     <slot />
+    <div id="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-ring" aria-hidden="true"></div>
 
     <script>
-      // Animações de entrada: revela elementos [data-reveal] ao rolar
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+      // ------ Animações de entrada: revela elementos [data-reveal] ao rolar ------
       const revealEls = document.querySelectorAll("[data-reveal]");
       const io = new IntersectionObserver(
         (entries) => {
@@ -81,6 +87,106 @@ const jsonLd = JSON.stringify({
         { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
       );
       revealEls.forEach((el) => io.observe(el));
+
+      // ------ Barra de progresso de leitura ------
+      const progress = document.getElementById("scroll-progress")!;
+      const updateProgress = () => {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - doc.clientHeight;
+        progress.style.transform = `scaleX(${max > 0 ? doc.scrollTop / max : 0})`;
+      };
+      window.addEventListener("scroll", () => requestAnimationFrame(updateProgress), { passive: true });
+      updateProgress();
+
+      // ------ Contadores animados ([data-counter]) ------
+      const formatNumber = (value: number, decimals: number) =>
+        value.toLocaleString("pt-BR", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+      const animateCounter = (el: HTMLElement) => {
+        const target = parseFloat(el.dataset.target || "0");
+        const decimals = parseInt(el.dataset.decimals || "0", 10);
+        if (reducedMotion) {
+          el.textContent = formatNumber(target, decimals);
+          return;
+        }
+        const duration = 1800;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = formatNumber(target * eased, decimals);
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      const counterIo = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target as HTMLElement);
+              counterIo.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.5 }
+      );
+      document.querySelectorAll<HTMLElement>("[data-counter]").forEach((el) => counterIo.observe(el));
+
+      // ------ Cursor customizado (desktop) ------
+      if (finePointer && !reducedMotion) {
+        document.documentElement.classList.add("cc");
+        const dot = document.getElementById("cursor-dot")!;
+        const ring = document.getElementById("cursor-ring")!;
+        let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y;
+
+        window.addEventListener(
+          "mousemove",
+          (e) => {
+            x = e.clientX;
+            y = e.clientY;
+            dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            const target = e.target as HTMLElement;
+            const interactive = target.closest?.("a, button, [role='button'], input, summary");
+            ring.classList.toggle("cc-active", !!interactive);
+            // O mapa (iframe) tem cursor próprio — esconde o customizado
+            const overIframe = target.tagName === "IFRAME";
+            dot.classList.toggle("cc-hidden", overIframe);
+            ring.classList.toggle("cc-hidden", overIframe);
+          },
+          { passive: true }
+        );
+        document.documentElement.addEventListener("mouseleave", () => {
+          dot.classList.add("cc-hidden");
+          ring.classList.add("cc-hidden");
+        });
+        document.documentElement.addEventListener("mouseenter", () => {
+          dot.classList.remove("cc-hidden");
+          ring.classList.remove("cc-hidden");
+        });
+        const followCursor = () => {
+          rx += (x - rx) * 0.16;
+          ry += (y - ry) * 0.16;
+          ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+          requestAnimationFrame(followCursor);
+        };
+        requestAnimationFrame(followCursor);
+      }
+
+      // ------ Botões magnéticos (desktop) ------
+      if (finePointer && !reducedMotion) {
+        document.querySelectorAll<HTMLElement>(".btn").forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const mx = e.clientX - rect.left - rect.width / 2;
+            const my = e.clientY - rect.top - rect.height / 2;
+            btn.style.transition = "transform 0.15s ease-out";
+            btn.style.transform = `translate(${mx * 0.18}px, ${my * 0.3}px)`;
+          });
+          btn.addEventListener("mouseleave", () => {
+            btn.style.transition = "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)";
+            btn.style.transform = "";
+          });
+        });
+      }
     </script>
   </body>
 </html>

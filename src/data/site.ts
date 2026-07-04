@@ -43,9 +43,9 @@ export const site = {
 
   // TODO: números reais da profissional
   stats: [
-    { value: "+10", label: "anos de experiência" },
-    { value: "+2mil", label: "procedimentos realizados" },
-    { value: "5.0", label: "avaliação das pacientes" },
+    { prefix: "+", value: 10, decimals: 0, label: "anos de experiência" },
+    { prefix: "+", value: 2000, decimals: 0, label: "procedimentos realizados" },
+    { prefix: "", value: 5, decimals: 1, label: "avaliação das pacientes" },
   ],
 };
 

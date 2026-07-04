@@ -242,6 +242,251 @@ body {
   background-clip: text;
   color: transparent;
 }
+
+/* Brilho dourado em movimento contínuo (títulos) */
+.gold-shimmer {
+  background-size: 220% auto;
+  animation: shimmer 5.5s linear infinite;
+}
+@keyframes shimmer {
+  to {
+    background-position: 220% center;
+  }
+}
+
+/* ============================================================
+   Entrada cinematográfica do hero
+   ============================================================ */
+.hero-title .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  margin-right: 0.28em;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.hero-title .w > span {
+  display: inline-block;
+  transform: translateY(115%);
+  animation: word-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--d, 0.35s);
+}
+@keyframes word-up {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-img-reveal {
+  clip-path: inset(100% 0 0 0);
+  animation: img-reveal 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+@keyframes img-reveal {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.kenburns {
+  animation: kenburns 20s ease-in-out infinite alternate;
+}
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.07);
+  }
+}
+
+/* Partículas douradas subindo no hero */
+.hero-particle {
+  position: absolute;
+  bottom: -2%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 205, 130, 0.9) 0%, rgba(201, 162, 39, 0.3) 65%, transparent 100%);
+  pointer-events: none;
+  opacity: 0;
+  animation: rise linear infinite;
+}
+@keyframes rise {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-105vh);
+    opacity: 0;
+  }
+}
+
+/* Selo giratório */
+.seal-rotate {
+  animation: spin-slow 22s linear infinite;
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   Marquee editorial
+   ============================================================ */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================
+   Barra de progresso de leitura
+   ============================================================ */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--color-gold-600), var(--color-gold-400), var(--color-gold-200));
+  transform-origin: left;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* ============================================================
+   Cursor customizado (somente desktop com mouse)
+   ============================================================ */
+html.cc,
+html.cc * {
+  cursor: none !important;
+}
+#cursor-dot,
+#cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  display: none;
+}
+html.cc #cursor-dot,
+html.cc #cursor-ring {
+  display: block;
+  opacity: 1;
+}
+html.cc #cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--color-gold-400);
+}
+html.cc #cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid rgba(201, 162, 39, 0.65);
+  transition:
+    width 0.25s,
+    height 0.25s,
+    margin 0.25s,
+    background 0.25s,
+    opacity 0.3s;
+}
+html.cc #cursor-ring.cc-active {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  background: rgba(201, 162, 39, 0.12);
+}
+html.cc #cursor-dot.cc-hidden,
+html.cc #cursor-ring.cc-hidden {
+  opacity: 0;
+}
+
+/* ============================================================
+   Brilho periódico varrendo os botões dourados
+   ============================================================ */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+.btn-gold::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-20deg);
+  animation: btn-sheen 5s ease-in-out infinite;
+}
+@keyframes btn-sheen {
+  0%,
+  60% {
+    left: -60%;
+  }
+  80%,
+  100% {
+    left: 130%;
+  }
+}
+
+/* ============================================================
+   Grão fotográfico (textura sutil nas seções vinho)
+   ============================================================ */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* ============================================================
+   Movimento reduzido: desliga os efeitos decorativos
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .gold-shimmer,
+  .hero-title .w > span,
+  .hero-img-reveal,
+  .kenburns,
+  .seal-rotate,
+  .marquee-track,
+  .btn-gold::after {
+    animation: none !important;
+  }
+  .hero-title .w > span {
+    transform: none;
+  }
+  .hero-img-reveal {
+    clip-path: none;
+  }
+  .hero-particle {
+    display: none;
+  }
+}
 .eyebrow {
   @apply flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.32em] uppercase;
 }
