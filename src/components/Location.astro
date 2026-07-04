@@ -7,7 +7,7 @@ import { site, waLink } from "../data/site";
     <!-- Informações -->
     <div>
       <p class="eyebrow text-gold-700" data-reveal>Localização</p>
-      <h2 class="font-display mt-5 text-3xl font-medium text-wine-900 sm:text-[2.6rem] sm:leading-tight" data-reveal style="--reveal-delay: 0.1s">
+      <h2 class="font-display mt-5 text-3xl font-medium text-wine-900 sm:text-[2.6rem] sm:leading-tight" data-split>
         Um espaço pensado para <em class="text-wine-700 italic">o seu bem-estar</em>
       </h2>
 
@@ -74,7 +74,7 @@ import { site, waLink } from "../data/site";
         <iframe
           src={site.mapsEmbed}
           title={`Mapa com a localização de ${site.name}`}
-          class="h-[26rem] w-full border-0 lg:h-[30rem]"
+          class="map-tint h-[26rem] w-full border-0 lg:h-[30rem]"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
           allowfullscreen

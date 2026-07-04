@@ -35,11 +35,33 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5.5rem;
+  scrollbar-color: var(--color-wine-700) var(--color-cream);
 }
 
 ::selection {
   background: var(--color-wine-700);
   color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-wine-700);
+  border-radius: 8px;
+  border: 2px solid var(--color-cream);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-wine-600);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-500);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 body {
@@ -56,7 +78,11 @@ body {
   @apply bg-gold-500 text-wine-950 shadow-[0_10px_30px_-10px_rgba(201,162,39,0.7)] hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-[0_16px_36px_-10px_rgba(201,162,39,0.8)];
 }
 .btn-ghost-light {
-  @apply border border-white/40 text-white hover:border-gold-400 hover:bg-white/5 hover:text-gold-300;
+  @apply border border-white/40 text-white hover:border-gold-400 hover:text-gold-300;
+  background: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)) left / 0% 100% no-repeat;
+}
+.btn-ghost-light:hover {
+  background-size: 100% 100%;
 }
 .btn-wine {
   @apply bg-wine-700 text-white shadow-[0_10px_30px_-12px_rgba(123,30,58,0.8)] hover:-translate-y-0.5 hover:bg-wine-800;
@@ -68,6 +94,13 @@ body {
 #site-header {
   --header-fg: #ffffff;
   --header-fg-soft: rgba(255, 255, 255, 0.78);
+}
+/* Header inteligente: esconde ao rolar para baixo, volta ao subir */
+#site-header.header-hidden {
+  transform: translateY(-110%);
+}
+#site-header:focus-within {
+  transform: none;
 }
 #site-header.scrolled {
   --header-fg: var(--color-wine-800);
@@ -489,6 +522,192 @@ html.cc #cursor-ring.cc-hidden {
 }
 
 /* ============================================================
+   Intro de marca (1x por sessão): cortinas vinho abrem
+   ============================================================ */
+html.no-intro #intro {
+  display: none;
+}
+html.intro-active {
+  overflow: hidden;
+}
+/* Segura a entrada do hero enquanto a intro está na frente */
+html.intro-active .hero-title .w > span,
+html.intro-active .hero-img-reveal {
+  animation-play-state: paused;
+}
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+}
+.intro-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  background: linear-gradient(160deg, var(--color-wine-950), var(--color-wine-900));
+  transition: transform 0.85s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.intro-panel-left {
+  left: 0;
+}
+.intro-panel-right {
+  right: 0;
+}
+#intro.intro-leave .intro-panel-left {
+  transform: translateX(-101%);
+}
+#intro.intro-leave .intro-panel-right {
+  transform: translateX(101%);
+}
+.intro-brand {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  opacity: 0;
+  animation: intro-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+  transition: opacity 0.35s, transform 0.35s;
+}
+#intro.intro-leave .intro-brand {
+  opacity: 0;
+  transform: scale(0.94);
+}
+@keyframes intro-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.intro-mono {
+  display: grid;
+  place-items: center;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 162, 39, 0.6);
+  color: var(--color-gold-300);
+  font-size: 2.4rem;
+  font-style: italic;
+}
+.intro-name {
+  color: #fff;
+  font-size: 0.9rem;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;
+  text-transform: uppercase;
+}
+.intro-sub {
+  color: var(--color-gold-400);
+  font-size: 0.58rem;
+  letter-spacing: 0.45em;
+  text-indent: 0.45em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Títulos com reveal palavra por palavra ([data-split])
+   ============================================================ */
+[data-split] .sw {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+[data-split] .sw > span {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0s);
+}
+[data-split].is-visible .sw > span {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Cortina de revelação para imagens ([data-curtain])
+   ============================================================ */
+[data-curtain] {
+  position: relative;
+  overflow: hidden;
+}
+[data-curtain] img {
+  transform: scale(1.14);
+  transition:
+    transform 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.15s,
+    scale 0.7s ease;
+}
+[data-curtain]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(105deg, var(--color-wine-800), var(--color-wine-700));
+  transition: transform 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+}
+[data-curtain].is-visible::after {
+  transform: translateX(101%);
+}
+[data-curtain].is-visible img {
+  transform: scale(1);
+}
+
+/* ============================================================
+   Spotlight dourado nos cards (segue o cursor)
+   ============================================================ */
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 162, 39, 0.14), transparent 65%);
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* ============================================================
+   Balão teaser do WhatsApp
+   ============================================================ */
+#wa-teaser {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 6.5rem;
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#wa-teaser.show {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* ============================================================
+   Mapa com tom editorial (cor volta no hover)
+   ============================================================ */
+.map-tint {
+  filter: grayscale(0.85) sepia(0.22) saturate(1.15);
+  transition: filter 0.6s;
+}
+.map-tint:hover {
+  filter: none;
+}
+
+/* ============================================================
    Movimento reduzido: desliga os efeitos decorativos
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
@@ -509,6 +728,21 @@ html.cc #cursor-ring.cc-hidden {
   }
   .hero-particle {
     display: none;
+  }
+  [data-split] .sw > span {
+    transition: none;
+    transform: none;
+  }
+  [data-curtain] img {
+    transition: none;
+    transform: none;
+  }
+  [data-curtain]::after {
+    display: none;
+  }
+  .intro-brand {
+    animation: none;
+    opacity: 1;
   }
 }
 .eyebrow {

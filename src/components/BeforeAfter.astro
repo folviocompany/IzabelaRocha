@@ -3,12 +3,14 @@ import { beforeAfter, waLink } from "../data/site";
 ---
 
 <section id="resultados" class="grain relative overflow-hidden bg-wine-950 py-24 lg:py-32">
-  <!-- Brilho decorativo -->
-  <div
-    class="absolute top-0 left-1/2 h-96 w-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-15 blur-3xl"
-    style="background: radial-gradient(circle, rgba(201,162,39,0.8) 0%, transparent 60%)"
-    aria-hidden="true"
-  >
+  <!-- Brilho decorativo com parallax -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
+    <div
+      class="h-96 w-[50rem] rounded-full opacity-15 blur-3xl"
+      style="background: radial-gradient(circle, rgba(201,162,39,0.8) 0%, transparent 60%)"
+      data-parallax="0.18"
+    >
+    </div>
   </div>
 
   <div class="relative mx-auto max-w-6xl px-5 lg:px-8">
@@ -57,10 +59,42 @@ import { beforeAfter, waLink } from "../data/site";
 
 <script>
   // Slider de comparação: o input range invisível controla a posição do corte
+  let interacted = false;
   document.querySelectorAll<HTMLElement>("[data-compare]").forEach((frame) => {
     const range = frame.querySelector<HTMLInputElement>(".ba-range");
+    range?.addEventListener("pointerdown", () => (interacted = true), { once: true });
     range?.addEventListener("input", () => {
+      interacted = true;
       frame.style.setProperty("--pos", `${range.value}%`);
     });
   });
+
+  // Dica de uso: o cursor desliza sozinho uma vez ao entrar na tela
+  const firstFrame = document.querySelector<HTMLElement>("[data-compare]");
+  if (firstFrame && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const hintIo = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        hintIo.disconnect();
+        if (interacted) return;
+        const range = firstFrame.querySelector<HTMLInputElement>(".ba-range")!;
+        setTimeout(() => {
+          const start = performance.now();
+          const duration = 1700;
+          const tick = (now: number) => {
+            if (interacted) return;
+            const p = Math.min(1, (now - start) / duration);
+            // Vai para um lado, volta para o outro e assenta no centro
+            const v = 50 + Math.sin(p * Math.PI * 2) * 14 * Math.sin(p * Math.PI);
+            firstFrame.style.setProperty("--pos", `${v}%`);
+            range.value = String(v);
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }, 500);
+      },
+      { threshold: 0.6 }
+    );
+    hintIo.observe(firstFrame);
+  }
 </script>

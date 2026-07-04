@@ -19,11 +19,13 @@ const particles = Array.from({ length: 16 }, (_, i) => ({
   <div
     class="absolute -top-40 -right-40 -z-10 h-[34rem] w-[34rem] rounded-full opacity-25 blur-3xl"
     style="background: radial-gradient(circle, rgba(201,162,39,0.55) 0%, transparent 65%)"
+    data-depth="18"
   >
   </div>
   <div
     class="absolute -bottom-52 -left-32 -z-10 h-[30rem] w-[30rem] rounded-full opacity-20 blur-3xl"
     style="background: radial-gradient(circle, rgba(169,60,100,0.7) 0%, transparent 65%)"
+    data-depth="14"
   >
   </div>
   <!-- Linha ornamental dourada -->
@@ -90,7 +92,7 @@ const particles = Array.from({ length: 16 }, (_, i) => ({
     <div class="relative mx-auto w-full max-w-[26rem] lg:max-w-[28rem]" data-reveal style="--reveal-delay: 0.2s">
       <!-- Moldura dourada deslocada -->
       <div class="absolute -inset-3 translate-x-5 translate-y-5 rounded-b-[2rem] rounded-t-[14rem] border border-gold-500/40" aria-hidden="true"></div>
-      <div class="hero-img-reveal relative aspect-[3/4] overflow-hidden rounded-b-[2rem] rounded-t-[14rem] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
+      <div class="hero-img-reveal relative aspect-[3/4] overflow-hidden rounded-b-[2rem] rounded-t-[14rem] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]" data-depth="6">
         <img
           src={images.hero}
           alt="Mulher com maquiagem sofisticada em tons de vinho"
@@ -109,6 +111,7 @@ const particles = Array.from({ length: 16 }, (_, i) => ({
         rel="noopener"
         class="group absolute -top-8 -right-4 hidden h-28 w-28 place-items-center md:grid lg:-right-10"
         aria-label="Agendar avaliação pelo WhatsApp"
+        data-depth="26"
       >
         <span class="absolute inset-0 rounded-full border border-gold-500/30 bg-wine-950/60 backdrop-blur-sm" aria-hidden="true"></span>
         <svg class="seal-rotate absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
@@ -127,7 +130,7 @@ const particles = Array.from({ length: 16 }, (_, i) => ({
       </a>
 
       <!-- Selo flutuante -->
-      <div class="absolute -bottom-6 -left-4 flex items-center gap-3 rounded-2xl bg-white/95 px-5 py-4 shadow-xl backdrop-blur sm:-left-10">
+      <div class="absolute -bottom-6 -left-4 flex items-center gap-3 rounded-2xl bg-white/95 px-5 py-4 shadow-xl backdrop-blur sm:-left-10" data-depth="20">
         <span class="grid h-10 w-10 place-items-center rounded-full bg-wine-700 text-gold-300" aria-hidden="true">
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" />

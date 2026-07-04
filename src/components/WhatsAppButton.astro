@@ -2,6 +2,24 @@
 import { waLink } from "../data/site";
 ---
 
+<!-- Balão teaser: aparece uma vez por sessão convidando para conversar -->
+<div id="wa-teaser" role="status">
+  <div class="relative flex items-center gap-2 rounded-2xl border border-wine-100 bg-white py-3 pr-9 pl-4 shadow-[0_18px_40px_-15px_rgba(46,8,19,0.35)]">
+    <a href={waLink()} target="_blank" rel="noopener" class="text-sm font-medium text-wine-800">
+      Olá! 👋 <span class="font-light text-ink/70">Quer agendar sua avaliação?</span>
+    </a>
+    <button
+      id="wa-teaser-close"
+      aria-label="Fechar mensagem"
+      class="absolute top-1.5 right-2 grid h-6 w-6 cursor-pointer place-items-center rounded-full text-ink/40 transition-colors hover:bg-wine-50 hover:text-wine-700"
+    >
+      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+  </div>
+</div>
+
 <a
   href={waLink()}
   target="_blank"
@@ -23,3 +41,26 @@ import { waLink } from "../data/site";
     </span>
   </span>
 </a>
+
+<script>
+  const teaser = document.getElementById("wa-teaser")!;
+  const closeBtn = document.getElementById("wa-teaser-close")!;
+  const dismiss = () => {
+    teaser.classList.remove("show");
+    try {
+      sessionStorage.setItem("waTeaser", "1");
+    } catch {}
+  };
+  let seen = false;
+  try {
+    seen = !!sessionStorage.getItem("waTeaser");
+  } catch {}
+  if (!seen) {
+    setTimeout(() => {
+      teaser.classList.add("show");
+      setTimeout(dismiss, 9000);
+    }, 5000);
+  }
+  closeBtn.addEventListener("click", dismiss);
+  teaser.querySelector("a")?.addEventListener("click", dismiss);
+</script>

@@ -64,9 +64,39 @@ const jsonLd = JSON.stringify({
     />
 
     <script type="application/ld+json" set:html={jsonLd} />
+
+    <!-- Decide antes da pintura se a intro de marca roda (1x por sessão) -->
+    <script is:inline>
+      (function () {
+        try {
+          if (
+            sessionStorage.getItem("introDone") ||
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ) {
+            document.documentElement.classList.add("no-intro");
+          } else {
+            document.documentElement.classList.add("intro-active");
+          }
+        } catch (e) {
+          document.documentElement.classList.add("no-intro");
+        }
+      })();
+    </script>
   </head>
   <body class="bg-cream font-sans text-ink antialiased">
     <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+    <!-- Intro de marca -->
+    <div id="intro" aria-hidden="true">
+      <div class="intro-panel intro-panel-left"></div>
+      <div class="intro-panel intro-panel-right"></div>
+      <div class="intro-brand">
+        <span class="intro-mono font-display">IR</span>
+        <span class="intro-name">Izabela Rocha</span>
+        <span class="intro-sub">Estética Avançada</span>
+      </div>
+    </div>
+
     <div id="scroll-progress" aria-hidden="true"></div>
     <slot />
     <div id="cursor-dot" aria-hidden="true"></div>
@@ -76,8 +106,56 @@ const jsonLd = JSON.stringify({
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-      // ------ Animações de entrada: revela elementos [data-reveal] ao rolar ------
-      const revealEls = document.querySelectorAll("[data-reveal]");
+      // ------ Intro de marca: cortinas abrem e liberam a entrada do hero ------
+      const intro = document.getElementById("intro");
+      if (intro && document.documentElement.classList.contains("intro-active")) {
+        setTimeout(() => intro.classList.add("intro-leave"), 1250);
+        setTimeout(() => {
+          intro.remove();
+          document.documentElement.classList.remove("intro-active");
+          try {
+            sessionStorage.setItem("introDone", "1");
+          } catch {}
+        }, 2150);
+      } else {
+        intro?.remove();
+      }
+
+      // ------ Divide títulos [data-split] em palavras para reveal em cascata ------
+      const splitHeading = (el: HTMLElement) => {
+        let index = 0;
+        const walk = (node: Node) => {
+          [...node.childNodes].forEach((child) => {
+            if (child.nodeType === Node.TEXT_NODE) {
+              const fragment = document.createDocumentFragment();
+              (child.textContent || "").split(/(\s+)/).forEach((part) => {
+                if (!part) return;
+                if (/^\s+$/.test(part)) {
+                  fragment.appendChild(document.createTextNode(" "));
+                  return;
+                }
+                const wrapper = document.createElement("span");
+                wrapper.className = "sw";
+                const inner = document.createElement("span");
+                inner.textContent = part;
+                inner.style.setProperty("--d", `${index++ * 0.05}s`);
+                wrapper.appendChild(inner);
+                fragment.appendChild(wrapper);
+              });
+              node.replaceChild(fragment, child);
+            } else if (child.nodeType === Node.ELEMENT_NODE) {
+              walk(child);
+            }
+          });
+        };
+        walk(el);
+      };
+      if (!reducedMotion) {
+        document.querySelectorAll<HTMLElement>("[data-split]").forEach(splitHeading);
+      }
+
+      // ------ Animações de entrada ao rolar ------
+      const revealEls = document.querySelectorAll("[data-reveal], [data-split], [data-curtain]");
       const io = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
@@ -90,6 +168,50 @@ const jsonLd = JSON.stringify({
         { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
       );
       revealEls.forEach((el) => io.observe(el));
+
+      // ------ Parallax sutil ao rolar ([data-parallax]) ------
+      const parallaxEls = [...document.querySelectorAll<HTMLElement>("[data-parallax]")];
+      if (parallaxEls.length && !reducedMotion) {
+        const updateParallax = () => {
+          const vh = window.innerHeight;
+          for (const el of parallaxEls) {
+            const rect = el.getBoundingClientRect();
+            const factor = parseFloat(el.dataset.parallax || "0.1");
+            el.style.transform = `translate3d(0, ${(rect.top + rect.height / 2 - vh / 2) * -factor}px, 0)`;
+          }
+        };
+        window.addEventListener("scroll", () => requestAnimationFrame(updateParallax), { passive: true });
+        updateParallax();
+      }
+
+      // ------ Parallax de mouse no hero (camadas com data-depth) ------
+      const heroSection = document.getElementById("inicio");
+      if (heroSection && finePointer && !reducedMotion) {
+        const layers = [...heroSection.querySelectorAll<HTMLElement>("[data-depth]")];
+        let nx = 0, ny = 0, cx = 0, cy = 0;
+        heroSection.addEventListener(
+          "mousemove",
+          (e) => {
+            nx = e.clientX / window.innerWidth - 0.5;
+            ny = e.clientY / window.innerHeight - 0.5;
+          },
+          { passive: true }
+        );
+        heroSection.addEventListener("mouseleave", () => {
+          nx = 0;
+          ny = 0;
+        });
+        const drift = () => {
+          cx += (nx - cx) * 0.06;
+          cy += (ny - cy) * 0.06;
+          for (const layer of layers) {
+            const depth = parseFloat(layer.dataset.depth || "10");
+            layer.style.transform = `translate3d(${cx * depth}px, ${cy * depth * 0.6}px, 0)`;
+          }
+          requestAnimationFrame(drift);
+        };
+        requestAnimationFrame(drift);
+      }
 
       // ------ Barra de progresso de leitura ------
       const progress = document.getElementById("scroll-progress")!;

@@ -80,15 +80,24 @@ const nav = [
   const menu = document.getElementById("mobile-menu")!;
   const bars = toggle.querySelectorAll(".menu-bar");
 
-  // Fundo sólido após rolar além do topo
-  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 40);
+  let open = false; // estado do menu mobile (usado pelo onScroll abaixo)
+
+  // Fundo sólido após o topo; esconde ao descer, reaparece ao subir
+  let lastY = window.scrollY;
+  const onScroll = () => {
+    const y = window.scrollY;
+    header.classList.toggle("scrolled", y > 40);
+    if (open) header.classList.remove("header-hidden");
+    else header.classList.toggle("header-hidden", y > lastY && y > 420);
+    lastY = y;
+  };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
   // Menu mobile
-  let open = false;
   const setMenu = (state: boolean) => {
     open = state;
+    if (state) header.classList.remove("header-hidden");
     toggle.setAttribute("aria-expanded", String(state));
     toggle.setAttribute("aria-label", state ? "Fechar menu" : "Abrir menu");
     menu.classList.toggle("opacity-0", !state);
