@@ -62,9 +62,9 @@ export function waLink(message: string = site.whatsappMessage): string {
 // ------------------------------------------------------------
 export const images = {
   hero: "https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=1100&q=80",
-  // Fotos reais da Dra. — salvar os arquivos em public/ com estes nomes exatos
-  about: "/dra-izabela.jpg", // retrato (foto vertical)
-  atendimento: "/dra-atendimento.jpg", // Dra. em atendimento
+  // Fotos reais da Dra. (arquivos em public/)
+  about: "/Doutora2.jpeg", // retrato (foto vertical) — seção Sobre
+  atendimento: "/Doutora1.jpeg", // Dra. em atendimento — seção HIFU
   facial: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=900&q=80",
   corporal: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=80",
   ambiente1: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=1200&q=80",
