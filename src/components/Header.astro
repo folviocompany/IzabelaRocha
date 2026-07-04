@@ -1,0 +1,105 @@
+---
+import { site, waLink } from "../data/site";
+
+const nav = [
+  { label: "Tratamentos", href: "#tratamentos" },
+  { label: "Resultados", href: "#resultados" },
+  { label: "Sobre", href: "#sobre" },
+  { label: "Depoimentos", href: "#depoimentos" },
+  { label: "Localização", href: "#localizacao" },
+];
+---
+
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-500">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 lg:px-8">
+    <!-- Logo -->
+    <a href="#inicio" class="flex flex-col leading-none" aria-label={`${site.name} — voltar ao início`}>
+      <span class="font-display text-[1.35rem] font-semibold tracking-wide" style="color: var(--header-fg)">
+        Izabela <span class="italic text-gold-400">Rocha</span>
+      </span>
+      <span class="mt-1 text-[0.58rem] font-medium tracking-[0.28em] whitespace-nowrap uppercase sm:tracking-[0.42em]" style="color: var(--header-fg-soft)">
+        Estética Avançada
+      </span>
+    </a>
+
+    <!-- Navegação desktop -->
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Navegação principal">
+      {nav.map((item) => (
+        <a href={item.href} class="nav-link text-[0.8rem] font-medium tracking-[0.08em] uppercase transition-colors duration-300">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href={waLink()} target="_blank" rel="noopener" class="btn btn-gold hidden !px-6 !py-2.5 sm:inline-flex">
+        Agendar
+      </a>
+
+      <!-- Botão do menu mobile -->
+      <button
+        id="menu-toggle"
+        class="relative z-[60] flex h-11 w-11 flex-col items-center justify-center gap-[5px] lg:hidden"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="menu-bar block h-[2px] w-6 rounded-full transition-all duration-300" style="background: var(--header-fg)"></span>
+        <span class="menu-bar block h-[2px] w-6 rounded-full transition-all duration-300" style="background: var(--header-fg)"></span>
+        <span class="menu-bar block h-[2px] w-6 rounded-full transition-all duration-300" style="background: var(--header-fg)"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Menu mobile (tela cheia) -->
+<div
+  id="mobile-menu"
+  class="pointer-events-none fixed inset-0 z-40 flex flex-col items-center justify-center gap-2 bg-wine-950/[0.97] opacity-0 backdrop-blur-sm transition-opacity duration-400 lg:hidden"
+>
+  {nav.map((item, i) => (
+    <a
+      href={item.href}
+      class="mobile-link font-display py-3 text-3xl text-white/90 italic transition-colors hover:text-gold-300"
+      style={`transition-delay: ${80 + i * 40}ms`}
+    >
+      {item.label}
+    </a>
+  ))}
+  <a href={waLink()} target="_blank" rel="noopener" class="btn btn-gold mobile-link mt-6">
+    Agendar avaliação
+  </a>
+  <a href={site.instagram} target="_blank" rel="noopener" class="mobile-link mt-8 text-sm tracking-[0.2em] text-white/50 uppercase">
+    {site.instagramHandle}
+  </a>
+</div>
+
+<script>
+  const header = document.getElementById("site-header")!;
+  const toggle = document.getElementById("menu-toggle")!;
+  const menu = document.getElementById("mobile-menu")!;
+  const bars = toggle.querySelectorAll(".menu-bar");
+
+  // Fundo sólido após rolar além do topo
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 40);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // Menu mobile
+  let open = false;
+  const setMenu = (state: boolean) => {
+    open = state;
+    toggle.setAttribute("aria-expanded", String(state));
+    toggle.setAttribute("aria-label", state ? "Fechar menu" : "Abrir menu");
+    menu.classList.toggle("opacity-0", !state);
+    menu.classList.toggle("pointer-events-none", !state);
+    document.body.style.overflow = state ? "hidden" : "";
+    // Transforma o hambúrguer em X (barras brancas sobre o painel vinho)
+    (bars[0] as HTMLElement).style.transform = state ? "translateY(7px) rotate(45deg)" : "";
+    (bars[1] as HTMLElement).style.opacity = state ? "0" : "1";
+    (bars[2] as HTMLElement).style.transform = state ? "translateY(-7px) rotate(-45deg)" : "";
+    bars.forEach((b) => ((b as HTMLElement).style.background = state ? "#fff" : ""));
+  };
+  toggle.addEventListener("click", () => setMenu(!open));
+  menu.querySelectorAll(".mobile-link").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+</script>

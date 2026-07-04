@@ -1,0 +1,86 @@
+---
+import { site, waLink } from "../data/site";
+---
+
+<section id="localizacao" class="bg-white py-24 lg:py-32">
+  <div class="mx-auto grid max-w-6xl items-center gap-14 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
+    <!-- Informações -->
+    <div>
+      <p class="eyebrow text-gold-600" data-reveal>Localização</p>
+      <h2 class="font-display mt-5 text-3xl font-medium text-wine-900 sm:text-[2.6rem] sm:leading-tight" data-reveal style="--reveal-delay: 0.1s">
+        Um espaço pensado para <em class="text-wine-700 italic">o seu bem-estar</em>
+      </h2>
+
+      <div class="mt-10 space-y-7" data-reveal style="--reveal-delay: 0.2s">
+        <!-- Endereço -->
+        <div class="flex items-start gap-4">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-wine-50 text-wine-700" aria-hidden="true">
+            <svg class="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z" />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+          </span>
+          <div>
+            <h3 class="text-sm font-semibold tracking-[0.12em] text-wine-900 uppercase">Endereço</h3>
+            <p class="mt-1.5 text-[0.95rem] leading-relaxed font-light text-ink/65">
+              {site.address.street}<br />
+              {site.address.district} · {site.address.city}<br />
+              CEP {site.address.zip}
+            </p>
+            <a href={site.mapsLink} target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[0.14em] text-gold-600 uppercase transition-colors hover:text-gold-700">
+              Como chegar
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 17L17 7M9 7h8v8" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Horário -->
+        <div class="flex items-start gap-4">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-wine-50 text-wine-700" aria-hidden="true">
+            <svg class="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 3" />
+            </svg>
+          </span>
+          <div class="flex-1">
+            <h3 class="text-sm font-semibold tracking-[0.12em] text-wine-900 uppercase">Horário de atendimento</h3>
+            <dl class="mt-2 max-w-xs space-y-1.5">
+              {site.hours.map((h) => (
+                <div class="flex items-baseline justify-between gap-6 text-[0.95rem] font-light">
+                  <dt class="text-ink/65">{h.days}</dt>
+                  <dd class:list={[h.time === "Fechado" ? "text-ink/40" : "text-wine-700 font-normal"]}>{h.time}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+
+        <!-- Contato -->
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a href={waLink()} target="_blank" rel="noopener" class="btn btn-wine !px-6 !py-3">WhatsApp</a>
+          <a href={site.instagram} target="_blank" rel="noopener" class="btn !px-6 !py-3 border border-wine-200 text-wine-700 hover:border-gold-400 hover:text-gold-700">
+            Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mapa -->
+    <div class="relative" data-reveal style="--reveal-delay: 0.15s">
+      <div class="absolute -inset-3 -translate-x-4 translate-y-4 rounded-3xl border border-gold-400/50" aria-hidden="true"></div>
+      <div class="relative overflow-hidden rounded-3xl shadow-[0_35px_70px_-30px_rgba(46,8,19,0.35)]">
+        <iframe
+          src={site.mapsEmbed}
+          title={`Mapa com a localização de ${site.name}`}
+          class="h-[26rem] w-full border-0 lg:h-[30rem]"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        >
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>

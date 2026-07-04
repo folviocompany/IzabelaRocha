@@ -1,0 +1,61 @@
+---
+import { faqs } from "../data/site";
+---
+
+<section id="faq" class="bg-cream py-24 lg:py-32">
+  <div class="mx-auto max-w-3xl px-5 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow eyebrow-center text-gold-600">Dúvidas frequentes</p>
+      <h2 class="font-display mt-5 text-3xl font-medium text-wine-900 sm:text-[2.6rem] sm:leading-tight">
+        Tudo o que você <em class="text-wine-700 italic">precisa saber</em>
+      </h2>
+    </div>
+
+    <div class="mt-14 divide-y divide-wine-100 border-y border-wine-100" data-reveal>
+      {faqs.map((faq, i) => (
+        <div class="faq-item">
+          <h3>
+            <button
+              type="button"
+              class="faq-toggle flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left transition-colors duration-300 hover:text-wine-700"
+              aria-expanded="false"
+              aria-controls={`faq-panel-${i}`}
+              id={`faq-button-${i}`}
+            >
+              <span class="text-base font-medium text-wine-900 sm:text-lg">{faq.question}</span>
+              <span class="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full border border-gold-400 text-gold-600" aria-hidden="true">
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </span>
+            </button>
+          </h3>
+          <div class="faq-answer" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-button-${i}`}>
+            <div>
+              <p class="pb-6 text-[0.95rem] leading-relaxed font-light text-ink/65">{faq.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Accordion: abre um item por vez
+  const items = document.querySelectorAll<HTMLElement>(".faq-item");
+  items.forEach((item) => {
+    const button = item.querySelector<HTMLButtonElement>(".faq-toggle")!;
+    button.addEventListener("click", () => {
+      const isOpen = item.classList.contains("open");
+      items.forEach((other) => {
+        other.classList.remove("open");
+        other.querySelector(".faq-toggle")?.setAttribute("aria-expanded", "false");
+      });
+      if (!isOpen) {
+        item.classList.add("open");
+        button.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+</script>

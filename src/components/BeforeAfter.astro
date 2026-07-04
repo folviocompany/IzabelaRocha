@@ -1,0 +1,66 @@
+---
+import { beforeAfter, waLink } from "../data/site";
+---
+
+<section id="resultados" class="relative overflow-hidden bg-wine-950 py-24 lg:py-32">
+  <!-- Brilho decorativo -->
+  <div
+    class="absolute top-0 left-1/2 h-96 w-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-15 blur-3xl"
+    style="background: radial-gradient(circle, rgba(201,162,39,0.8) 0%, transparent 60%)"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-6xl px-5 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow eyebrow-center text-gold-400">Antes & Depois</p>
+      <h2 class="font-display mt-5 text-3xl font-medium text-white sm:text-[2.6rem] sm:leading-tight">
+        Resultados que falam <em class="gold-text italic">por si</em>
+      </h2>
+      <p class="mt-5 text-base leading-relaxed font-light text-white/60">
+        Arraste para comparar. Cada resultado é fruto de avaliação criteriosa,
+        técnica apurada e respeito às características de cada paciente.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-8 md:grid-cols-2">
+      {beforeAfter.map((item, i) => (
+        <figure data-reveal style={`--reveal-delay: ${i * 0.12}s`}>
+          <div class="ba-frame aspect-[4/3] rounded-3xl ring-1 ring-gold-500/30" data-compare>
+            <img src={item.image} alt={`Antes do procedimento de ${item.title}`} class="ba-before" width="900" height="675" loading="lazy" decoding="async" />
+            <img src={item.image} alt={`Depois do procedimento de ${item.title}`} class="ba-after" width="900" height="675" loading="lazy" decoding="async" />
+            <span class="absolute top-4 left-4 z-10 rounded-full bg-wine-950/70 px-3.5 py-1.5 text-[0.62rem] font-bold tracking-[0.2em] text-white/80 uppercase backdrop-blur-sm">Antes</span>
+            <span class="absolute top-4 right-4 z-10 rounded-full bg-gold-500/90 px-3.5 py-1.5 text-[0.62rem] font-bold tracking-[0.2em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
+            <div class="ba-handle" aria-hidden="true"></div>
+            <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois — ${item.title}`} />
+          </div>
+          <figcaption class="mt-5 px-1">
+            <p class="font-display text-lg text-white">{item.title}</p>
+            <p class="mt-1 text-sm font-light text-white/50">{item.subtitle}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <p class="mt-10 text-center text-xs font-light text-white/40 italic" data-reveal>
+      Imagens ilustrativas — serão substituídas por casos reais, com autorização expressa das pacientes.
+      Resultados variam de pessoa para pessoa.
+    </p>
+
+    <div class="mt-12 text-center" data-reveal>
+      <a href={waLink("Olá! Vi os resultados no site e gostaria de agendar uma avaliação.")} target="_blank" rel="noopener" class="btn btn-gold">
+        Quero um resultado assim
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Slider de comparação: o input range invisível controla a posição do corte
+  document.querySelectorAll<HTMLElement>("[data-compare]").forEach((frame) => {
+    const range = frame.querySelector<HTMLInputElement>(".ba-range");
+    range?.addEventListener("input", () => {
+      frame.style.setProperty("--pos", `${range.value}%`);
+    });
+  });
+</script>

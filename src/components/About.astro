@@ -1,0 +1,74 @@
+---
+import { site, images, waLink } from "../data/site";
+
+const credentials = [
+  site.register,
+  "Especialização em Harmonização Orofacial",
+  "Formação avançada em toxina botulínica e preenchedores",
+  "Atualização constante em congressos nacionais e internacionais",
+];
+---
+
+<section id="sobre" class="bg-cream py-24 lg:py-32">
+  <div class="mx-auto grid max-w-6xl items-center gap-16 px-5 lg:grid-cols-[5fr_6fr] lg:gap-20 lg:px-8">
+    <!-- Foto com moldura dourada e selo de experiência -->
+    <div class="relative mx-auto w-full max-w-md" data-reveal>
+      <div class="absolute -inset-3 translate-x-4 translate-y-4 rounded-3xl border border-gold-400/60" aria-hidden="true"></div>
+      <img
+        src={images.about}
+        alt={`${site.name}, profissional responsável pela clínica`}
+        class="relative aspect-[4/5] w-full rounded-3xl object-cover shadow-[0_35px_70px_-30px_rgba(46,8,19,0.4)]"
+        width="700"
+        height="875"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="absolute -bottom-7 -right-3 rounded-2xl bg-wine-700 px-6 py-5 text-center shadow-[0_20px_45px_-15px_rgba(92,19,41,0.7)] sm:-right-7">
+        <p class="font-display text-4xl font-medium text-gold-300">{site.stats[0].value}</p>
+        <p class="mt-1 max-w-[7rem] text-[0.62rem] leading-snug tracking-[0.18em] text-white/75 uppercase">
+          {site.stats[0].label}
+        </p>
+      </div>
+    </div>
+
+    <!-- Bio -->
+    <div>
+      <p class="eyebrow text-gold-600" data-reveal>Sobre a profissional</p>
+      <h2 class="font-display mt-5 text-3xl font-medium text-wine-900 sm:text-[2.6rem] sm:leading-tight" data-reveal style="--reveal-delay: 0.1s">
+        {site.name}
+      </h2>
+      <p class="mt-6 text-base leading-relaxed font-light text-ink/70" data-reveal style="--reveal-delay: 0.18s">
+        Há mais de uma década dedicada à estética avançada, a Dra. Izabela acredita que o melhor
+        procedimento é aquele que ninguém percebe — as pessoas apenas notam você mais bonita,
+        descansada e confiante.
+      </p>
+      <p class="mt-4 text-base leading-relaxed font-light text-ink/70" data-reveal style="--reveal-delay: 0.24s">
+        Unindo técnica apurada, materiais de excelência e um olhar artístico sobre cada rosto,
+        ela conduz protocolos personalizados em um espaço pensado para o seu conforto e bem-estar.
+      </p>
+
+      <ul class="mt-8 space-y-3.5" data-reveal style="--reveal-delay: 0.3s">
+        {credentials.map((credential) => (
+          <li class="flex items-start gap-3 text-[0.95rem] font-light text-ink/75">
+            <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gold-100 text-gold-700" aria-hidden="true">
+              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            {credential}
+          </li>
+        ))}
+      </ul>
+
+      <p class="font-display mt-9 text-2xl text-wine-700 italic" data-reveal style="--reveal-delay: 0.36s" aria-hidden="true">
+        Izabela Rocha
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-4" data-reveal style="--reveal-delay: 0.4s">
+        <a href={waLink("Olá! Gostaria de agendar uma avaliação com a Dra. Izabela.")} target="_blank" rel="noopener" class="btn btn-wine">
+          Agendar com a Dra.
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

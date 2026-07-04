@@ -1,0 +1,100 @@
+---
+import { site, images, waLink } from "../data/site";
+---
+
+<section id="inicio" class="relative isolate flex min-h-svh items-center overflow-hidden bg-wine-950">
+  <!-- Fundo: gradiente vinho + brilhos dourados sutis -->
+  <div class="absolute inset-0 -z-10 bg-gradient-to-br from-wine-950 via-wine-900 to-wine-800"></div>
+  <div
+    class="absolute -top-40 -right-40 -z-10 h-[34rem] w-[34rem] rounded-full opacity-25 blur-3xl"
+    style="background: radial-gradient(circle, rgba(201,162,39,0.55) 0%, transparent 65%)"
+  >
+  </div>
+  <div
+    class="absolute -bottom-52 -left-32 -z-10 h-[30rem] w-[30rem] rounded-full opacity-20 blur-3xl"
+    style="background: radial-gradient(circle, rgba(169,60,100,0.7) 0%, transparent 65%)"
+  >
+  </div>
+  <!-- Linha ornamental dourada -->
+  <div class="absolute top-0 bottom-0 left-1/2 hidden w-px bg-gradient-to-b from-transparent via-gold-500/20 to-transparent lg:block"></div>
+
+  <div class="mx-auto grid w-full max-w-6xl items-center gap-14 px-5 pt-32 pb-20 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:pt-36">
+    <!-- Texto -->
+    <div>
+      <p class="eyebrow text-gold-400" data-reveal>
+        Estética Avançada · Harmonização Facial
+      </p>
+      <h1
+        class="font-display mt-6 text-[2.6rem] leading-[1.08] font-medium text-white sm:text-6xl lg:text-[4.2rem]"
+        data-reveal
+        style="--reveal-delay: 0.1s"
+      >
+        Realce a beleza que <em class="gold-text italic">já existe</em> em você
+      </h1>
+      <p class="mt-6 max-w-xl text-base leading-relaxed font-light text-white/70 sm:text-lg" data-reveal style="--reveal-delay: 0.2s">
+        Procedimentos estéticos com técnica, segurança e olhar artístico — para resultados
+        naturais que valorizam a sua identidade, sem exageros.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-4" data-reveal style="--reveal-delay: 0.3s">
+        <a href={waLink()} target="_blank" rel="noopener" class="btn btn-gold">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35M12.04 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.4 9.4 0 0 1-1.45-5.03c0-5.21 4.25-9.45 9.47-9.45a9.4 9.4 0 0 1 6.69 2.77 9.4 9.4 0 0 1 2.77 6.7c0 5.21-4.25 9.44-9.46 9.44m8.05-17.5A11.3 11.3 0 0 0 12.03 .68C5.77.68.68 5.77.68 12.02c0 2 .52 3.95 1.52 5.67L.6 23.5l5.94-1.56a11.35 11.35 0 0 0 5.48 1.4h.01c6.26 0 11.35-5.1 11.35-11.35 0-3.03-1.18-5.88-3.32-8.02" />
+          </svg>
+          Agende sua avaliação
+        </a>
+        <a href="#tratamentos" class="btn btn-ghost-light">Conheça os tratamentos</a>
+      </div>
+
+      <!-- Estatísticas -->
+      <dl class="mt-14 flex flex-wrap gap-x-12 gap-y-6" data-reveal style="--reveal-delay: 0.4s">
+        {site.stats.map((stat) => (
+          <div>
+            <dt class="sr-only">{stat.label}</dt>
+            <dd class="font-display text-3xl font-medium text-gold-400">{stat.value}</dd>
+            <dd class="mt-1 max-w-[9rem] text-xs leading-snug tracking-wide text-white/55 uppercase">{stat.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- Imagem em arco -->
+    <div class="relative mx-auto w-full max-w-[26rem] lg:max-w-[28rem]" data-reveal style="--reveal-delay: 0.25s">
+      <!-- Moldura dourada deslocada -->
+      <div class="absolute -inset-3 translate-x-5 translate-y-5 rounded-b-[2rem] rounded-t-[14rem] border border-gold-500/40" aria-hidden="true"></div>
+      <div class="relative aspect-[3/4] overflow-hidden rounded-b-[2rem] rounded-t-[14rem] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
+        <img
+          src={images.hero}
+          alt="Mulher com maquiagem sofisticada em tons de vinho"
+          class="h-full w-full object-cover"
+          width="880"
+          height="1173"
+          fetchpriority="high"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-wine-950/50 via-transparent to-transparent"></div>
+      </div>
+      <!-- Selo flutuante -->
+      <div class="absolute -bottom-6 -left-4 flex items-center gap-3 rounded-2xl bg-white/95 px-5 py-4 shadow-xl backdrop-blur sm:-left-10">
+        <span class="grid h-10 w-10 place-items-center rounded-full bg-wine-700 text-gold-300" aria-hidden="true">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" />
+          </svg>
+        </span>
+        <div class="leading-tight">
+          <p class="text-sm font-semibold text-wine-800">Avaliação personalizada</p>
+          <p class="text-xs text-ink/60">Plano de tratamento sob medida</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicador de rolagem -->
+  <a
+    href="#tratamentos"
+    class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/40 transition-colors hover:text-gold-300 lg:flex"
+    aria-label="Rolar para os tratamentos"
+  >
+    <span class="text-[0.6rem] tracking-[0.35em] uppercase">Descubra</span>
+    <span class="block h-10 w-px animate-pulse bg-gradient-to-b from-gold-400/80 to-transparent"></span>
+  </a>
+</section>

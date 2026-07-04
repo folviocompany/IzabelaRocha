@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Paleta vinho ---- */
+  --color-wine-50: #fbf3f6;
+  --color-wine-100: #f5e2e9;
+  --color-wine-200: #ebc3d1;
+  --color-wine-300: #db97af;
+  --color-wine-400: #c56287;
+  --color-wine-500: #a93c64;
+  --color-wine-600: #8f2a4d;
+  --color-wine-700: #7b1e3a; /* primária */
+  --color-wine-800: #5c1329; /* escura (hover/contraste) */
+  --color-wine-900: #47101f;
+  --color-wine-950: #2e0813;
+
+  /* ---- Dourado ---- */
+  --color-gold-100: #f7efd8;
+  --color-gold-200: #eedfae;
+  --color-gold-300: #e3cb7e;
+  --color-gold-400: #d6b54e;
+  --color-gold-500: #c9a227; /* principal */
+  --color-gold-600: #a8861f;
+  --color-gold-700: #856818;
+
+  /* ---- Neutros ---- */
+  --color-cream: #faf7f2;
+  --color-ink: #2b2225;
+
+  /* ---- Tipografia ---- */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+::selection {
+  background: var(--color-wine-700);
+  color: #fff;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   Botões
+   ============================================================ */
+.btn {
+  @apply inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-[0.8rem] font-semibold tracking-[0.14em] uppercase transition-all duration-300;
+}
+.btn-gold {
+  @apply bg-gold-500 text-wine-950 shadow-[0_10px_30px_-10px_rgba(201,162,39,0.7)] hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-[0_16px_36px_-10px_rgba(201,162,39,0.8)];
+}
+.btn-ghost-light {
+  @apply border border-white/40 text-white hover:border-gold-400 hover:bg-white/5 hover:text-gold-300;
+}
+.btn-wine {
+  @apply bg-wine-700 text-white shadow-[0_10px_30px_-12px_rgba(123,30,58,0.8)] hover:-translate-y-0.5 hover:bg-wine-800;
+}
+
+/* ============================================================
+   Cabeçalho — muda ao rolar (transparente → sólido)
+   ============================================================ */
+#site-header {
+  --header-fg: #ffffff;
+  --header-fg-soft: rgba(255, 255, 255, 0.78);
+}
+#site-header.scrolled {
+  --header-fg: var(--color-wine-800);
+  --header-fg-soft: rgba(92, 19, 41, 0.8);
+  background: rgba(250, 247, 242, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px -18px rgba(46, 8, 19, 0.35);
+}
+.nav-link {
+  color: var(--header-fg-soft);
+  position: relative;
+}
+.nav-link:hover {
+  color: var(--header-fg);
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1.5px;
+  background: var(--color-gold-500);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   Animações de entrada (reveal on scroll)
+   ============================================================ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
+   Slider Antes & Depois
+   ============================================================ */
+.ba-frame {
+  --pos: 50%;
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+.ba-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+.ba-before {
+  filter: grayscale(0.95) contrast(0.92) brightness(0.96);
+}
+.ba-after {
+  clip-path: inset(0 0 0 var(--pos));
+}
+.ba-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 2px;
+  background: var(--color-gold-400);
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+.ba-handle::after {
+  content: "⟨ ⟩";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: var(--color-gold-500);
+  color: var(--color-wine-950);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.55);
+}
+.ba-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  margin: 0;
+}
+
+/* ============================================================
+   FAQ (accordion)
+   ============================================================ */
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.faq-answer > div {
+  overflow: hidden;
+}
+.faq-item.open .faq-answer {
+  grid-template-rows: 1fr;
+}
+.faq-icon {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* ============================================================
+   Botão flutuante do WhatsApp
+   ============================================================ */
+@keyframes wa-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  80%,
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+.wa-ping {
+  animation: wa-ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-ping {
+    animation: none;
+    display: none;
+  }
+}
+
+/* ============================================================
+   Detalhes decorativos
+   ============================================================ */
+.gold-text {
+  background: linear-gradient(105deg, #e3cb7e 0%, #c9a227 45%, #f0dfa6 70%, #c9a227 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.eyebrow {
+  @apply flex items-center gap-3 text-[0.72rem] font-semibold tracking-[0.32em] uppercase;
+}
+.eyebrow::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--color-gold-500);
+}
+.eyebrow-center {
+  @apply justify-center;
+}
+.eyebrow-center::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--color-gold-500);
+}

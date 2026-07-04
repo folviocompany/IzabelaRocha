@@ -1,0 +1,85 @@
+---
+import { services, waLink } from "../data/site";
+
+// Ícones de linha, desenhados para manter a elegância da identidade
+const icons: Record<string, string> = {
+  sparkle: `<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/><path d="M19 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z"/>`,
+  droplet: `<path d="M12 3s6 6.4 6 10.6a6 6 0 1 1-12 0C6 9.4 12 3 12 3z"/><path d="M9.5 13.5a2.6 2.6 0 0 0 2 2.6"/>`,
+  lotus: `<path d="M12 20c-2.5-1.5-4-4-4-7 0-2.5 1.5-5.5 4-8 2.5 2.5 4 5.5 4 8 0 3-1.5 5.5-4 7z"/><path d="M12 20c-3.5.5-6.5-.5-8.5-3 1.8-.8 3.6-1.1 5.3-.8M12 20c3.5.5 6.5-.5 8.5-3-1.8-.8-3.6-1.1-5.3-.8"/>`,
+  waves: `<path d="M3 9c2.2 0 2.2 1.8 4.5 1.8S9.8 9 12 9s2.2 1.8 4.5 1.8S18.8 9 21 9"/><path d="M3 14.5c2.2 0 2.2 1.8 4.5 1.8s2.3-1.8 4.5-1.8 2.2 1.8 4.5 1.8 2.3-1.8 4.5-1.8"/>`,
+  leaf: `<path d="M5 19C5 10.5 10.5 5 19 5c0 8.5-5.5 14-14 14z"/><path d="M5 19c3-3 6-6 10-8"/>`,
+  dots: `<circle cx="6" cy="6" r="1"/><circle cx="12" cy="6" r="1"/><circle cx="18" cy="6" r="1"/><circle cx="6" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="18" cy="12" r="1"/><circle cx="6" cy="18" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="18" cy="18" r="1"/>`,
+};
+---
+
+<section id="tratamentos" class="bg-white py-24 lg:py-32">
+  <div class="mx-auto max-w-6xl px-5 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow eyebrow-center text-gold-600">Tratamentos</p>
+      <h2 class="font-display mt-5 text-3xl font-medium text-wine-900 sm:text-[2.6rem] sm:leading-tight">
+        Protocolos pensados para <em class="text-wine-700 italic">a sua</em> beleza
+      </h2>
+      <p class="mt-5 text-base leading-relaxed font-light text-ink/60">
+        Cada rosto é único. Por isso, todo tratamento começa com uma avaliação criteriosa
+        e um plano personalizado para os seus objetivos.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {services.map((service, i) => (
+        <article
+          class:list={[
+            "group relative flex flex-col rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1.5",
+            service.featured
+              ? "bg-gradient-to-br from-wine-700 to-wine-900 text-white shadow-[0_30px_60px_-25px_rgba(92,19,41,0.7)]"
+              : "border border-wine-100 bg-cream/60 hover:border-gold-300 hover:shadow-[0_30px_60px_-30px_rgba(46,8,19,0.25)]",
+          ]}
+          data-reveal
+          style={`--reveal-delay: ${(i % 3) * 0.1}s`}
+        >
+          {service.featured && (
+            <span class="absolute -top-3 right-6 rounded-full bg-gold-500 px-4 py-1 text-[0.62rem] font-bold tracking-[0.18em] text-wine-950 uppercase shadow-md">
+              Mais procurado
+            </span>
+          )}
+          <span
+            class:list={[
+              "grid h-14 w-14 place-items-center rounded-2xl transition-colors duration-500",
+              service.featured ? "bg-white/10 text-gold-300" : "bg-wine-50 text-wine-700 group-hover:bg-gold-100 group-hover:text-gold-700",
+            ]}
+            aria-hidden="true"
+          >
+            <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={icons[service.icon]} />
+          </span>
+
+          <h3 class:list={["font-display mt-6 text-xl font-medium", service.featured ? "text-white" : "text-wine-900"]}>
+            {service.name}
+          </h3>
+          <p class:list={["mt-3 flex-1 text-sm leading-relaxed font-light", service.featured ? "text-white/70" : "text-ink/60"]}>
+            {service.description}
+          </p>
+
+          <div class:list={["mt-7 flex items-center justify-between border-t pt-5", service.featured ? "border-white/15" : "border-wine-100"]}>
+            <span class:list={["text-[0.68rem] font-semibold tracking-[0.22em] uppercase", service.featured ? "text-gold-300" : "text-gold-600"]}>
+              {service.price}
+            </span>
+            <a
+              href={waLink(`Olá! Gostaria de saber mais sobre ${service.name}.`)}
+              target="_blank"
+              rel="noopener"
+              class:list={[
+                "inline-flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[0.14em] uppercase transition-all duration-300",
+                service.featured ? "text-white hover:text-gold-300" : "text-wine-700 hover:text-wine-800",
+              ]}
+            >
+              Agendar
+              <svg class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
