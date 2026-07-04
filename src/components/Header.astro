@@ -32,7 +32,7 @@ const nav = [
     </nav>
 
     <div class="flex items-center gap-3">
-      <a href={waLink()} target="_blank" rel="noopener" class="btn btn-gold hidden !px-6 !py-2.5 sm:inline-flex">
+      <a href={waLink()} target="_blank" rel="noopener" class="btn btn-gold !px-4 !py-2 !text-[0.68rem] sm:!px-6 sm:!py-2.5 sm:!text-[0.8rem]">
         Agendar
       </a>
 
@@ -102,4 +102,24 @@ const nav = [
   };
   toggle.addEventListener("click", () => setMenu(!open));
   menu.querySelectorAll(".mobile-link").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+
+  // Scrollspy: marca no menu a seção visível
+  const navLinks = [...document.querySelectorAll<HTMLAnchorElement>(".nav-link")];
+  const linkById = new Map(navLinks.map((link) => [link.getAttribute("href")!.slice(1), link]));
+  const spy = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          link.removeAttribute("aria-current");
+        });
+        const active = linkById.get(entry.target.id);
+        active?.classList.add("active");
+        active?.setAttribute("aria-current", "true");
+      }
+    },
+    { rootMargin: "-40% 0px -55% 0px" }
+  );
+  document.querySelectorAll("section[id], footer[id]").forEach((section) => spy.observe(section));
 </script>

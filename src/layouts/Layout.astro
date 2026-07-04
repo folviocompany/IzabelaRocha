@@ -40,9 +40,11 @@ const jsonLd = JSON.stringify({
     <meta name="description" content={description} />
     <meta name="theme-color" content="#7B1E3A" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {site.siteUrl && <link rel="canonical" href={site.siteUrl} />}
 
     <!-- Open Graph (WhatsApp / Instagram / Facebook) -->
     <meta property="og:type" content="website" />
+    {site.siteUrl && <meta property="og:url" content={site.siteUrl} />}
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
@@ -64,6 +66,7 @@ const jsonLd = JSON.stringify({
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body class="bg-cream font-sans text-ink antialiased">
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
     <div id="scroll-progress" aria-hidden="true"></div>
     <slot />
     <div id="cursor-dot" aria-hidden="true"></div>

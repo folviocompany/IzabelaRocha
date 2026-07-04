@@ -99,6 +99,30 @@ body {
 .nav-link:hover::after {
   transform: scaleX(1);
 }
+.nav-link.active {
+  color: var(--header-fg);
+}
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Link de acessibilidade: aparece apenas ao focar via teclado */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  border-radius: 999px;
+  background: var(--color-gold-500);
+  color: var(--color-wine-950);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: top 0.3s;
+}
+.skip-link:focus {
+  top: 1rem;
+}
 
 /* ============================================================
    Animações de entrada (reveal on scroll)

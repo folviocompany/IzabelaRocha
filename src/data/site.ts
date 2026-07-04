@@ -7,6 +7,9 @@ export const site = {
   name: "Dra. Izabela Rocha",
   shortName: "Izabela Rocha",
   tagline: "Estética Avançada",
+
+  // TODO: trocar pelo domínio final quando definido (usado em canonical/OG)
+  siteUrl: "https://izabelarocha.vercel.app",
   description:
     "Estética avançada e harmonização facial com resultados naturais. Toxina botulínica, preenchimento, bioestimuladores e mais. Agende sua avaliação.",
 
@@ -124,6 +127,30 @@ export const services: Service[] = [
     description:
       "Induz a renovação da pele, tratando cicatrizes de acne, poros dilatados, manchas e flacidez.",
     price: "Sob consulta",
+  },
+];
+
+// ------------------------------------------------------------
+// Como funciona — jornada da paciente
+// ------------------------------------------------------------
+export const steps = [
+  {
+    number: "01",
+    title: "Avaliação personalizada",
+    description:
+      "Conversamos sobre seus objetivos e analisamos seu rosto e sua pele com atenção a cada detalhe — sem pressa e sem compromisso.",
+  },
+  {
+    number: "02",
+    title: "Plano sob medida",
+    description:
+      "Você recebe um protocolo claro, com indicações, etapas e valores transparentes. Nada de procedimentos desnecessários.",
+  },
+  {
+    number: "03",
+    title: "Acompanhamento contínuo",
+    description:
+      "Retornos programados para acompanhar a evolução e garantir que o resultado permaneça natural e duradouro.",
   },
 ];
 
