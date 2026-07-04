@@ -276,13 +276,33 @@ export const steps = [
 export const beforeAfter = [
   {
     title: "Harmonização Facial",
-    subtitle: "Protocolo personalizado com resultado após 30 dias",
-    image: images.facial,
+    subtitle: "Equilíbrio e naturalidade para o rosto",
+    image: "/resultados/resultado-harmonizacao.jpeg",
+  },
+  {
+    title: "Preenchimento Labial",
+    subtitle: "Volume e contorno com resultado natural",
+    image: "/resultados/resultado-labial.jpeg",
+  },
+  {
+    title: "Toxina Botulínica",
+    subtitle: "Linhas da testa suavizadas",
+    image: "/resultados/resultado-botox.jpeg",
+  },
+  {
+    title: "Tratamento de Olheiras",
+    subtitle: "Área dos olhos descansada e iluminada",
+    image: "/resultados/resultado-olheiras.jpeg",
+  },
+  {
+    title: "Redução de Papada",
+    subtitle: "Contorno do queixo e do pescoço mais firme",
+    image: "/resultados/resultado-papada.jpeg",
   },
   {
     title: "Rejuvenescimento de Pele",
-    subtitle: "Bioestimulador de colágeno em 2 sessões",
-    image: images.corporal,
+    subtitle: "Textura e viço renovados",
+    image: "/resultados/resultado-pele.jpeg",
   },
 ];
 

@@ -20,23 +20,27 @@ import { beforeAfter, waLink } from "../data/site";
         Resultados que falam <em class="gold-text gold-shimmer italic">por si</em>
       </h2>
       <p class="mt-5 text-base leading-relaxed font-light text-white/60">
-        Arraste para comparar. Cada resultado é fruto de avaliação criteriosa,
-        técnica apurada e respeito às características de cada paciente.
+        Casos reais de pacientes. Cada resultado é fruto de avaliação criteriosa,
+        técnica apurada e respeito às características de cada pessoa.
       </p>
     </div>
 
-    <div class="mt-16 grid gap-8 md:grid-cols-2">
+    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {beforeAfter.map((item, i) => (
-        <figure data-reveal style={`--reveal-delay: ${i * 0.12}s`}>
-          <div class="ba-frame aspect-[4/3] rounded-3xl ring-1 ring-gold-500/30" data-compare>
-            <img src={item.image} alt={`Antes do procedimento de ${item.title}`} class="ba-before" width="900" height="675" loading="lazy" decoding="async" />
-            <img src={item.image} alt={`Depois do procedimento de ${item.title}`} class="ba-after" width="900" height="675" loading="lazy" decoding="async" />
-            <span class="absolute top-4 left-4 z-10 rounded-full bg-wine-950/70 px-3.5 py-1.5 text-[0.62rem] font-bold tracking-[0.2em] text-white/80 uppercase backdrop-blur-sm">Antes</span>
-            <span class="absolute top-4 right-4 z-10 rounded-full bg-gold-500/90 px-3.5 py-1.5 text-[0.62rem] font-bold tracking-[0.2em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
-            <div class="ba-handle" aria-hidden="true"></div>
-            <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois de ${item.title}`} />
+        <figure class="group" data-reveal style={`--reveal-delay: ${(i % 3) * 0.1}s`}>
+          <div class="relative overflow-hidden rounded-2xl ring-1 ring-gold-500/30 transition-all duration-500 group-hover:ring-gold-400/70">
+            <img
+              src={item.image}
+              alt={`Resultado de antes e depois: ${item.title}`}
+              class="aspect-square w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+              width="1280"
+              height="1280"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-wine-950/45 via-transparent to-transparent"></div>
           </div>
-          <figcaption class="mt-5 px-1">
+          <figcaption class="mt-4 px-1">
             <p class="font-display text-lg text-white">{item.title}</p>
             <p class="mt-1 text-sm font-light text-white/50">{item.subtitle}</p>
           </figcaption>
@@ -44,57 +48,15 @@ import { beforeAfter, waLink } from "../data/site";
       ))}
     </div>
 
-    <p class="mt-10 text-center text-xs font-light text-white/40 italic" data-reveal>
-      Imagens ilustrativas. Serão substituídas por casos reais, com autorização expressa das pacientes.
-      Resultados variam de pessoa para pessoa.
+    <p class="mt-12 text-center text-xs font-light text-white/40 italic" data-reveal>
+      Resultados reais de pacientes, publicados com autorização de uso de imagem.
+      Os resultados variam de pessoa para pessoa.
     </p>
 
-    <div class="mt-12 text-center" data-reveal>
+    <div class="mt-10 text-center" data-reveal>
       <a href={waLink("Olá! Vi os resultados no site e gostaria de agendar uma avaliação.")} target="_blank" rel="noopener" class="btn btn-gold">
         Quero um resultado assim
       </a>
     </div>
   </div>
 </section>
-
-<script>
-  // Slider de comparação: o input range invisível controla a posição do corte
-  let interacted = false;
-  document.querySelectorAll<HTMLElement>("[data-compare]").forEach((frame) => {
-    const range = frame.querySelector<HTMLInputElement>(".ba-range");
-    range?.addEventListener("pointerdown", () => (interacted = true), { once: true });
-    range?.addEventListener("input", () => {
-      interacted = true;
-      frame.style.setProperty("--pos", `${range.value}%`);
-    });
-  });
-
-  // Dica de uso: o cursor desliza sozinho uma vez ao entrar na tela
-  const firstFrame = document.querySelector<HTMLElement>("[data-compare]");
-  if (firstFrame && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const hintIo = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((e) => e.isIntersecting)) return;
-        hintIo.disconnect();
-        if (interacted) return;
-        const range = firstFrame.querySelector<HTMLInputElement>(".ba-range")!;
-        setTimeout(() => {
-          const start = performance.now();
-          const duration = 1700;
-          const tick = (now: number) => {
-            if (interacted) return;
-            const p = Math.min(1, (now - start) / duration);
-            // Vai para um lado, volta para o outro e assenta no centro
-            const v = 50 + Math.sin(p * Math.PI * 2) * 14 * Math.sin(p * Math.PI);
-            firstFrame.style.setProperty("--pos", `${v}%`);
-            range.value = String(v);
-            if (p < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }, 500);
-      },
-      { threshold: 0.6 }
-    );
-    hintIo.observe(firstFrame);
-  }
-</script>
