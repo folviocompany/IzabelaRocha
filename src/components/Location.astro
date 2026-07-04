@@ -24,7 +24,7 @@ import { site, waLink } from "../data/site";
             <h3 class="text-sm font-semibold tracking-[0.12em] text-wine-900 uppercase">Endereço</h3>
             <p class="mt-1.5 text-[0.95rem] leading-relaxed font-light text-ink/65">
               {site.address.street}<br />
-              {site.address.district} · {site.address.city}<br />
+              {site.address.district}, {site.address.city}<br />
               CEP {site.address.zip}
             </p>
             <a href={site.mapsLink} target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[0.14em] text-gold-700 uppercase transition-colors hover:text-wine-700">

@@ -21,7 +21,7 @@ const nav = [
         </p>
         <p class="mt-1 text-[0.6rem] font-medium tracking-[0.42em] text-white/50 uppercase">Estética Avançada</p>
         <p class="mt-5 max-w-xs text-sm leading-relaxed font-light text-white/50">
-          Estética avançada com resultados naturais, técnica e acolhimento — para
+          Estética avançada com resultados naturais, técnica e acolhimento para
           você se sentir bem na sua própria pele.
         </p>
         <div class="mt-6 flex gap-3">
@@ -79,7 +79,7 @@ const nav = [
         <ul class="mt-5 space-y-3 text-sm font-light text-white/55">
           <li>
             {site.address.street}<br />
-            {site.address.district} · {site.address.city}
+            {site.address.district}, {site.address.city}
           </li>
           <li>
             <a href={waLink()} target="_blank" rel="noopener" class="transition-colors duration-300 hover:text-gold-300">
@@ -94,10 +94,10 @@ const nav = [
 
     <div class="mt-14 border-t border-white/10 pt-7 text-center">
       <p class="text-xs font-light text-white/40">
-        © {year} {site.name} — Todos os direitos reservados.
+        © {year} {site.name}. Todos os direitos reservados.
       </p>
       <p class="mt-2 text-[0.68rem] font-light text-white/30">
-        Responsável técnica: {site.name} · {site.register}
+        Responsável técnica: {site.name}. {site.register}
       </p>
     </div>
   </div>

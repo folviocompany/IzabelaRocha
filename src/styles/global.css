@@ -68,6 +68,12 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Molduras decorativas deslocadas não devem gerar scroll horizontal.
+   clip no eixo X preserva o scroll vertical e não afeta elementos fixed. */
+main {
+  overflow-x: clip;
+}
+
 /* ============================================================
    Botões
    ============================================================ */

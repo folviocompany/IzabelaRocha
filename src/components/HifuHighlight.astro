@@ -1,0 +1,116 @@
+---
+import { hifu, waLink } from "../data/site";
+
+// Ícones das vantagens práticas, na mesma ordem de hifu.advantages
+const advIcons = [
+  `<path d="M20 4C11 4 5 10 4 19c7-1 13-5 15-11"/><path d="M4 19c3-4 7-7 12-9"/>`, // não invasivo
+  `<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2.5"/>`, // retorno imediato
+  `<path d="M12 4l1.6 4.4L18 10l-4.4 1.6L12 16l-1.6-4.4L6 10l4.4-1.6L12 4z"/>`, // resultados duradouros
+  `<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/>`, // segurança
+];
+
+const groups = [
+  { label: "Benefícios faciais e estéticos", items: hifu.facial },
+  { label: "Benefícios corporais", items: hifu.corporal },
+];
+---
+
+<section id="sonofocus" class="relative overflow-hidden bg-gradient-to-b from-white to-cream py-24 lg:py-32">
+  <!-- Brilho decorativo -->
+  <div
+    class="absolute -top-24 right-0 h-96 w-96 rounded-full opacity-20 blur-3xl"
+    style="background: radial-gradient(circle, rgba(201,162,39,0.6) 0%, transparent 65%)"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-6xl px-5 lg:px-8">
+    <!-- Topo: imagem + introdução + vantagens -->
+    <div class="grid items-center gap-14 lg:grid-cols-[5fr_6fr] lg:gap-16">
+      <!-- Imagem -->
+      <div class="relative mx-auto w-full max-w-md">
+        <div class="absolute -inset-3 -translate-x-4 translate-y-4 rounded-[2rem] border border-gold-400/60" aria-hidden="true"></div>
+        <div class="relative rounded-[2rem] shadow-[0_35px_70px_-30px_rgba(46,8,19,0.45)]" data-curtain>
+          <img
+            src={hifu.image}
+            alt="Aplicação do Sonofocus HIFU no rosto"
+            class="aspect-[4/5] w-full rounded-[2rem] object-cover"
+            width="700"
+            height="875"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <!-- Selo flutuante -->
+        <div class="absolute -bottom-6 -right-3 rounded-2xl bg-wine-700 px-5 py-4 text-center shadow-[0_20px_45px_-15px_rgba(92,19,41,0.7)] sm:-right-6">
+          <p class="font-display text-3xl font-medium text-gold-300">6</p>
+          <p class="mt-0.5 max-w-[8rem] text-[0.6rem] leading-snug tracking-[0.16em] text-white/75 uppercase">
+            meses de colágeno novo
+          </p>
+        </div>
+      </div>
+
+      <!-- Texto -->
+      <div>
+        <p class="eyebrow text-gold-700" data-reveal>{hifu.eyebrow}</p>
+        <h2 class="font-display mt-5 text-3xl font-medium text-wine-900 sm:text-[2.4rem] sm:leading-tight" data-split>
+          {hifu.title}
+        </h2>
+        <p class="mt-6 text-base leading-relaxed font-light text-ink/70" data-reveal style="--reveal-delay: 0.15s">
+          {hifu.intro}
+        </p>
+
+        <!-- Vantagens práticas -->
+        <div class="mt-9 grid gap-x-6 gap-y-6 sm:grid-cols-2" data-reveal style="--reveal-delay: 0.25s">
+          {hifu.advantages.map((adv, i) => (
+            <div class="flex items-start gap-3.5">
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-wine-50 text-wine-700" aria-hidden="true">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={advIcons[i]} />
+              </span>
+              <div>
+                <p class="text-sm font-semibold text-wine-900">{adv.title}</p>
+                <p class="mt-0.5 text-[0.82rem] leading-snug font-light text-ink/60">{adv.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-9" data-reveal style="--reveal-delay: 0.35s">
+          <a href={waLink("Olá! Gostaria de saber mais sobre o Sonofocus HIFU.")} target="_blank" rel="noopener" class="btn btn-wine">
+            Quero saber mais sobre o HIFU
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Benefícios detalhados: faciais e corporais -->
+    <div class="mt-16 grid gap-6 md:grid-cols-2 lg:mt-20">
+      {groups.map((group, gi) => (
+        <div
+          class="rounded-3xl border border-wine-100 bg-white/70 p-8 shadow-[0_30px_60px_-40px_rgba(46,8,19,0.3)] sm:p-9"
+          data-reveal
+          style={`--reveal-delay: ${gi * 0.12}s`}
+        >
+          <h3 class="font-display flex items-center gap-3 text-xl font-medium text-wine-900">
+            <span class="h-px w-8 bg-gold-500" aria-hidden="true"></span>
+            {group.label}
+          </h3>
+          <ul class="mt-6 space-y-4">
+            {group.items.map((item) => (
+              <li class="flex items-start gap-3.5">
+                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold-100 text-gold-700" aria-hidden="true">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                </span>
+                <p class="text-[0.95rem] leading-relaxed font-light text-ink/70">
+                  <strong class="font-medium text-wine-900">{item.title}:</strong> {item.text}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

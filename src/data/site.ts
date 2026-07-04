@@ -23,9 +23,9 @@ export const site = {
 
   // TODO: endereço real
   address: {
-    street: "Av. Exemplo, 1234 — Sala 56",
+    street: "Av. Exemplo, 1234, Sala 56",
     district: "Centro",
-    city: "Sua Cidade — UF",
+    city: "Sua Cidade, UF",
     zip: "00000-000",
   },
 
@@ -42,7 +42,7 @@ export const site = {
   mapsLink: "https://www.google.com/maps?q=Avenida+Paulista,+S%C3%A3o+Paulo",
 
   // TODO: registro profissional real
-  register: "Biomédica Esteta — CRBM 0.0000",
+  register: "Biomédica Esteta, CRBM 0.0000",
 
   // TODO: números reais da profissional
   stats: [
@@ -77,21 +77,31 @@ export const images = {
 // Serviços — TODO: confirmar lista, descrições e valores
 // ------------------------------------------------------------
 export interface Service {
-  icon: "sparkle" | "droplet" | "lotus" | "waves" | "leaf" | "dots";
+  icon: "sparkle" | "droplet" | "lotus" | "waves" | "leaf" | "dots" | "focus";
   name: string;
   description: string;
   price: string;
   featured?: boolean;
+  // Se presente, o botão do card leva a uma âncora interna em vez do WhatsApp.
+  anchor?: string;
 }
 
 export const services: Service[] = [
+  {
+    icon: "focus",
+    name: "Sonofocus HIFU",
+    description:
+      "Ultrassom microfocado que promove efeito lifting sem cortes nem agulhas, firmando o rosto e o corpo com colágeno novo.",
+    price: "Sob consulta",
+    featured: true,
+    anchor: "#sonofocus",
+  },
   {
     icon: "sparkle",
     name: "Toxina Botulínica",
     description:
       "Suaviza linhas de expressão e previne novas rugas, preservando a naturalidade dos seus movimentos.",
     price: "Sob consulta",
-    featured: true,
   },
   {
     icon: "droplet",
@@ -121,14 +131,36 @@ export const services: Service[] = [
       "Protocolo completo de higienização, esfoliação e hidratação para uma pele renovada e saudável.",
     price: "Sob consulta",
   },
-  {
-    icon: "dots",
-    name: "Microagulhamento",
-    description:
-      "Induz a renovação da pele, tratando cicatrizes de acne, poros dilatados, manchas e flacidez.",
-    price: "Sob consulta",
-  },
 ];
+
+// ------------------------------------------------------------
+// Sonofocus HIFU — tratamento em destaque (conteúdo real da cliente)
+// ------------------------------------------------------------
+export const hifu = {
+  eyebrow: "Tecnologia em destaque",
+  title: "Sonofocus HIFU: lifting sem cortes nem agulhas",
+  intro:
+    "O Sonofocus HIFU utiliza ultrassom microfocado para tratar as camadas profundas da pele com segurança. Ele contrai as fibras de colágeno já existentes e estimula a produção de colágeno novo, unindo efeito lifting imediato a resultados que evoluem por meses.",
+  image: images.facial,
+  advantages: [
+    { title: "Não invasivo", text: "Sem cortes, cicatrizes ou anestesia geral." },
+    { title: "Retorno imediato", text: "Você volta à rotina no mesmo dia, sem recuperação." },
+    { title: "Resultados duradouros", text: "O colágeno novo permanece visível por muitos meses." },
+    { title: "Segurança", text: "Atuação focada que preserva a camada superficial da pele." },
+  ],
+  facial: [
+    { title: "Efeito lifting imediato", text: "Contrai as fibras de colágeno logo após a aplicação." },
+    { title: "Estímulo de colágeno", text: "Produz colágeno novo por até 6 meses após a sessão." },
+    { title: "Redução da flacidez", text: "Firma a pele do rosto, pescoço, colo e pálpebras." },
+    { title: "Suavização de rugas", text: "Atenua linhas de expressão e o bigode chinês." },
+    { title: "Definição do contorno", text: "Melhora a linha da mandíbula e reduz a papada." },
+  ],
+  corporal: [
+    { title: "Redução de medidas", text: "Trata a gordura localizada com resultado definitivo." },
+    { title: "Tratamento da celulite", text: "Melhora o aspecto de casca de laranja nas coxas e glúteos." },
+    { title: "Firmeza corporal", text: "Combate a flacidez no abdômen, nos braços e em outras áreas." },
+  ],
+};
 
 // ------------------------------------------------------------
 // Como funciona — jornada da paciente
@@ -138,7 +170,7 @@ export const steps = [
     number: "01",
     title: "Avaliação personalizada",
     description:
-      "Conversamos sobre seus objetivos e analisamos seu rosto e sua pele com atenção a cada detalhe — sem pressa e sem compromisso.",
+      "Conversamos sobre seus objetivos e analisamos seu rosto e sua pele com atenção a cada detalhe, sem pressa e sem compromisso.",
   },
   {
     number: "02",
@@ -161,12 +193,12 @@ export const steps = [
 export const beforeAfter = [
   {
     title: "Harmonização Facial",
-    subtitle: "Protocolo personalizado — resultado após 30 dias",
+    subtitle: "Protocolo personalizado com resultado após 30 dias",
     image: images.facial,
   },
   {
     title: "Rejuvenescimento de Pele",
-    subtitle: "Bioestimulador de colágeno — 2 sessões",
+    subtitle: "Bioestimulador de colágeno em 2 sessões",
     image: images.corporal,
   },
 ];
@@ -179,7 +211,7 @@ export const testimonials = [
     name: "Mariana C.",
     procedure: "Toxina Botulínica",
     avatar: images.avatar1,
-    text: "Resultado extremamente natural — ninguém percebeu que eu “fiz algo”, só comentam que estou com uma ótima aparência. A Dra. Izabela é impecável do início ao fim.",
+    text: "Resultado extremamente natural. Ninguém percebeu que eu “fiz algo”, só comentam que estou com uma ótima aparência. A Dra. Izabela é impecável do início ao fim.",
   },
   {
     name: "Fernanda L.",
@@ -217,12 +249,12 @@ export const faqs = [
   {
     question: "Existe alguma contraindicação?",
     answer:
-      "Sim — gestantes, lactantes e pessoas com determinadas condições de saúde precisam de cuidados especiais. Por isso toda paciente passa por uma avaliação criteriosa antes de qualquer procedimento, garantindo total segurança.",
+      "Sim. Gestantes, lactantes e pessoas com determinadas condições de saúde precisam de cuidados especiais. Por isso toda paciente passa por uma avaliação criteriosa antes de qualquer procedimento, garantindo total segurança.",
   },
   {
     question: "Preciso de avaliação antes de fechar um procedimento?",
     answer:
-      "Sim. A avaliação é o momento em que analisamos a sua pele, entendemos as suas expectativas e montamos um plano de tratamento sob medida — sem compromisso e com total transparência sobre valores.",
+      "Sim. A avaliação é o momento em que analisamos a sua pele, entendemos as suas expectativas e montamos um plano de tratamento sob medida, sem compromisso e com total transparência sobre valores.",
   },
   {
     question: "Quais são as formas de pagamento?",

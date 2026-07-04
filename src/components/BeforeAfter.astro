@@ -34,7 +34,7 @@ import { beforeAfter, waLink } from "../data/site";
             <span class="absolute top-4 left-4 z-10 rounded-full bg-wine-950/70 px-3.5 py-1.5 text-[0.62rem] font-bold tracking-[0.2em] text-white/80 uppercase backdrop-blur-sm">Antes</span>
             <span class="absolute top-4 right-4 z-10 rounded-full bg-gold-500/90 px-3.5 py-1.5 text-[0.62rem] font-bold tracking-[0.2em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
             <div class="ba-handle" aria-hidden="true"></div>
-            <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois — ${item.title}`} />
+            <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois de ${item.title}`} />
           </div>
           <figcaption class="mt-5 px-1">
             <p class="font-display text-lg text-white">{item.title}</p>
@@ -45,7 +45,7 @@ import { beforeAfter, waLink } from "../data/site";
     </div>
 
     <p class="mt-10 text-center text-xs font-light text-white/40 italic" data-reveal>
-      Imagens ilustrativas — serão substituídas por casos reais, com autorização expressa das pacientes.
+      Imagens ilustrativas. Serão substituídas por casos reais, com autorização expressa das pacientes.
       Resultados variam de pessoa para pessoa.
     </p>
 

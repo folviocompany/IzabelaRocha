@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { site, waLink } from "../data/site";
 ---
 
-<Layout title={`Página não encontrada — ${site.name}`}>
+<Layout title={`Página não encontrada, ${site.name}`}>
   <main class="grain relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-wine-950 via-wine-900 to-wine-800 px-5 text-center">
     <div
       class="absolute top-1/2 left-1/2 h-96 w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-15 blur-3xl"
@@ -17,7 +17,7 @@ import { site, waLink } from "../data/site";
       Essa página não existe
     </h1>
     <p class="relative mt-4 max-w-md text-base font-light text-white/60">
-      O endereço pode ter mudado — mas a sua beleza continua no lugar certo.
+      O endereço pode ter mudado, mas a sua beleza continua no lugar certo.
     </p>
     <div class="relative mt-10 flex flex-wrap items-center justify-center gap-4">
       <a href="/" class="btn btn-gold">Voltar ao início</a>
