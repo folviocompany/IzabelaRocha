@@ -41,8 +41,7 @@ export const site = {
     "https://www.google.com/maps?q=Avenida+Paulista,+S%C3%A3o+Paulo&output=embed",
   mapsLink: "https://www.google.com/maps?q=Avenida+Paulista,+S%C3%A3o+Paulo",
 
-  // TODO: registro profissional real
-  register: "Biomédica Esteta, CRBM 0.0000",
+  register: "Biomédica Esteta, CRBM 62108",
 
   stats: [
     { prefix: "+", value: 2500, decimals: 0, label: "pacientes atendidos" },
