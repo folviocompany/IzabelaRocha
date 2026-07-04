@@ -11,7 +11,7 @@ export const site = {
   // TODO: trocar pelo domínio final quando definido (usado em canonical/OG)
   siteUrl: "https://izabelarocha.vercel.app",
   description:
-    "Estética avançada e harmonização facial com resultados naturais. Toxina botulínica, preenchimento, bioestimuladores e mais. Agende sua avaliação.",
+    "Estética avançada e harmonização facial com resultados naturais. Toxina botulínica, bioestimulador, fios de PDO, tecnologia HIFU e mais. Agende sua avaliação.",
 
   // TODO: número real da cliente (formato: 55 + DDD + número, só dígitos)
   whatsapp: "5500000000000",
@@ -77,7 +77,20 @@ export const images = {
 // Serviços — TODO: confirmar lista, descrições e valores
 // ------------------------------------------------------------
 export interface Service {
-  icon: "sparkle" | "droplet" | "lotus" | "waves" | "leaf" | "dots" | "focus";
+  icon:
+    | "sparkle"
+    | "droplet"
+    | "lotus"
+    | "waves"
+    | "leaf"
+    | "dots"
+    | "focus"
+    | "face"
+    | "body"
+    | "layers"
+    | "nose"
+    | "thread"
+    | "light";
   name: string;
   description: string;
   price: string;
@@ -88,13 +101,12 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    icon: "focus",
-    name: "Sonofocus HIFU",
+    icon: "face",
+    name: "Harmonização Facial",
     description:
-      "Ultrassom microfocado que promove efeito lifting sem cortes nem agulhas, firmando o rosto e o corpo com colágeno novo.",
+      "Um conjunto de procedimentos personalizados que equilibram as proporções do rosto, realçando seus traços com naturalidade e elegância.",
     price: "Sob consulta",
     featured: true,
-    anchor: "#sonofocus",
   },
   {
     icon: "sparkle",
@@ -104,10 +116,38 @@ export const services: Service[] = [
     price: "Sob consulta",
   },
   {
-    icon: "droplet",
-    name: "Preenchimento com Ácido Hialurônico",
+    icon: "body",
+    name: "Harmonização Glútea",
     description:
-      "Reposição de volume e contorno para lábios, olheiras e sulcos, com resultado imediato e harmônico.",
+      "Realça o contorno e a firmeza dos glúteos, melhorando volume e sustentação sem cirurgia.",
+    price: "Sob consulta",
+  },
+  {
+    icon: "dots",
+    name: "Microagulhamento",
+    description:
+      "Induz a renovação da pele, tratando cicatrizes de acne, poros dilatados, manchas e flacidez.",
+    price: "Sob consulta",
+  },
+  {
+    icon: "layers",
+    name: "Peeling Químico",
+    description:
+      "Renova as camadas superficiais da pele, uniformiza o tom e devolve viço e maciez.",
+    price: "Sob consulta",
+  },
+  {
+    icon: "waves",
+    name: "Perfiloplastia",
+    description:
+      "Redesenha o contorno do rosto de perfil, harmonizando queixo, mandíbula e pescoço.",
+    price: "Sob consulta",
+  },
+  {
+    icon: "nose",
+    name: "Rinomodelação",
+    description:
+      "Corrige e refina o formato do nariz sem cirurgia, com resultado imediato e natural.",
     price: "Sob consulta",
   },
   {
@@ -118,17 +158,39 @@ export const services: Service[] = [
     price: "Sob consulta",
   },
   {
-    icon: "waves",
-    name: "Skinbooster",
+    icon: "thread",
+    name: "Fios de PDO",
     description:
-      "Hidratação profunda injetável que melhora textura, elasticidade e luminosidade da pele.",
+      "Promovem efeito lifting e estímulo de colágeno, firmando a pele e redefinindo o contorno.",
     price: "Sob consulta",
   },
   {
     icon: "leaf",
-    name: "Limpeza de Pele Premium",
+    name: "Acompanhamento Skincare",
     description:
-      "Protocolo completo de higienização, esfoliação e hidratação para uma pele renovada e saudável.",
+      "Rotina de cuidados personalizada, com orientação profissional para manter a saúde e o brilho da sua pele.",
+    price: "Sob consulta",
+  },
+  {
+    icon: "droplet",
+    name: "Redução de Papada",
+    description:
+      "Afina o contorno facial reduzindo a gordura sob o queixo com enzimas, tecnologias e ativos.",
+    price: "Sob consulta",
+  },
+  {
+    icon: "focus",
+    name: "Tecnologia HIFU",
+    description:
+      "Ultrassom microfocado que promove efeito lifting sem cortes nem agulhas, firmando o rosto e o corpo.",
+    price: "Sob consulta",
+    anchor: "#sonofocus",
+  },
+  {
+    icon: "light",
+    name: "LED Laser",
+    description:
+      "Terapia com luz que trata a acne, controla a oleosidade e estimula a renovação da pele.",
     price: "Sob consulta",
   },
 ];

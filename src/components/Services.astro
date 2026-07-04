@@ -1,4 +1,4 @@
-﻿---
+---
 import { services, waLink } from "../data/site";
 
 // Ícones de linha, desenhados para manter a elegância da identidade
@@ -10,7 +10,19 @@ const icons: Record<string, string> = {
   leaf: `<path d="M5 19C5 10.5 10.5 5 19 5c0 8.5-5.5 14-14 14z"/><path d="M5 19c3-3 6-6 10-8"/>`,
   dots: `<circle cx="6" cy="6" r="1"/><circle cx="12" cy="6" r="1"/><circle cx="18" cy="6" r="1"/><circle cx="6" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="18" cy="12" r="1"/><circle cx="6" cy="18" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="18" cy="18" r="1"/>`,
   focus: `<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/>`,
+  face: `<circle cx="12" cy="12" r="9"/><path d="M9 10.5h.01M15 10.5h.01"/><path d="M9 14.5c1.6 1.4 4.4 1.4 6 0"/>`,
+  body: `<path d="M14 3.6a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path d="M9.5 8c-1.2 1-1.8 2.5-1.2 4 .5 1.3 2 1.8 2 3.2 0 1.6-1.3 2.4-1.3 4.6M14.5 8c1.2 1 1.8 2.5 1.2 4-.5 1.3-2 1.8-2 3.2 0 1.6 1.3 2.4 1.3 4.6"/>`,
+  layers: `<path d="M12 4l8 4-8 4-8-4 8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16l8 4 8-4"/>`,
+  nose: `<path d="M12 4v8.5c0 1-.7 1.8-1.7 2M12 12.5c0 1 .7 1.8 1.7 2"/><path d="M9 16.5c1.8 1.2 4.2 1.2 6 0"/>`,
+  thread: `<path d="M5 19L19 5"/><circle cx="5" cy="19" r="1.5"/><circle cx="19" cy="5" r="1.5"/><path d="M10 11l3 3"/>`,
+  light: `<circle cx="12" cy="12" r="3.5"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/>`,
 };
+
+const featured = services.find((s) => s.featured);
+const rest = services.filter((s) => !s.featured);
+
+// Diferenciais mostrados no card de destaque
+const featuredPerks = ["Proporção e simetria", "Resultado natural", "Plano 100% personalizado"];
 ---
 
 <section id="tratamentos" class="bg-white py-24 lg:py-32">
@@ -26,52 +38,77 @@ const icons: Record<string, string> = {
       </p>
     </div>
 
-    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {services.map((service, i) => (
+    <!-- Tratamento em destaque (card largo) -->
+    {featured && (
+      <article
+        class="grain group relative mt-16 overflow-hidden rounded-3xl bg-gradient-to-br from-wine-700 to-wine-900 text-white shadow-[0_40px_80px_-35px_rgba(92,19,41,0.8)]"
+        data-reveal
+      >
+        <!-- Brilho decorativo -->
+        <div
+          class="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full opacity-25 blur-3xl"
+          style="background: radial-gradient(circle, rgba(201,162,39,0.7) 0%, transparent 65%)"
+          aria-hidden="true"
+        >
+        </div>
+
+        <span class="absolute top-6 right-6 z-10 rounded-full bg-gold-500 px-4 py-1 text-[0.62rem] font-bold tracking-[0.18em] text-wine-950 uppercase shadow-md">
+          Em destaque
+        </span>
+
+        <div class="relative grid gap-10 p-8 sm:p-10 lg:grid-cols-[1.5fr_1fr] lg:items-center lg:gap-12 lg:p-12">
+          <div>
+            <span class="grid h-16 w-16 place-items-center rounded-2xl bg-white/10 text-gold-300" aria-hidden="true">
+              <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={icons[featured.icon]} />
+            </span>
+            <h3 class="font-display mt-6 text-3xl font-medium text-white sm:text-4xl">{featured.name}</h3>
+            <p class="mt-4 max-w-xl text-base leading-relaxed font-light text-white/75">{featured.description}</p>
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <a href={waLink(`Olá! Gostaria de agendar uma avaliação de ${featured.name}.`)} target="_blank" rel="noopener" class="btn btn-gold">
+                Agendar {featured.name}
+              </a>
+              <span class="text-[0.68rem] font-semibold tracking-[0.22em] text-gold-300 uppercase">{featured.price}</span>
+            </div>
+          </div>
+
+          <ul class="space-y-3.5 lg:border-l lg:border-white/15 lg:pl-10">
+            {featuredPerks.map((perk) => (
+              <li class="flex items-center gap-3 text-[0.95rem] font-light text-white/85">
+                <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold-500/20 text-gold-300" aria-hidden="true">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                </span>
+                {perk}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    )}
+
+    <!-- Demais tratamentos -->
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {rest.map((service, i) => (
         <article
-          class:list={[
-            "group relative flex flex-col rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1.5",
-            service.featured
-              ? "bg-gradient-to-br from-wine-700 to-wine-900 text-white shadow-[0_30px_60px_-25px_rgba(92,19,41,0.7)]"
-              : "spotlight-card border border-wine-100 bg-cream/60 hover:border-gold-300 hover:shadow-[0_30px_60px_-30px_rgba(46,8,19,0.25)]",
-          ]}
+          class="spotlight-card group relative flex flex-col rounded-3xl border border-wine-100 bg-cream/60 p-8 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold-300 hover:shadow-[0_30px_60px_-30px_rgba(46,8,19,0.25)]"
           data-reveal
           style={`--reveal-delay: ${(i % 3) * 0.1}s`}
         >
-          {service.featured && (
-            <span class="absolute -top-3 right-6 rounded-full bg-gold-500 px-4 py-1 text-[0.62rem] font-bold tracking-[0.18em] text-wine-950 uppercase shadow-md">
-              Mais procurado
-            </span>
-          )}
-          <span
-            class:list={[
-              "grid h-14 w-14 place-items-center rounded-2xl transition-colors duration-500",
-              service.featured ? "bg-white/10 text-gold-300" : "bg-wine-50 text-wine-700 group-hover:bg-gold-100 group-hover:text-gold-700",
-            ]}
-            aria-hidden="true"
-          >
+          <span class="grid h-14 w-14 place-items-center rounded-2xl bg-wine-50 text-wine-700 transition-colors duration-500 group-hover:bg-gold-100 group-hover:text-gold-700" aria-hidden="true">
             <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={icons[service.icon]} />
           </span>
 
-          <h3 class:list={["font-display mt-6 text-xl font-medium", service.featured ? "text-white" : "text-wine-900"]}>
-            {service.name}
-          </h3>
-          <p class:list={["mt-3 flex-1 text-sm leading-relaxed font-light", service.featured ? "text-white/70" : "text-ink/60"]}>
-            {service.description}
-          </p>
+          <h3 class="font-display mt-6 text-xl font-medium text-wine-900">{service.name}</h3>
+          <p class="mt-3 flex-1 text-sm leading-relaxed font-light text-ink/60">{service.description}</p>
 
-          <div class:list={["mt-7 flex items-center justify-between border-t pt-5", service.featured ? "border-white/15" : "border-wine-100"]}>
-            <span class:list={["text-[0.68rem] font-semibold tracking-[0.22em] uppercase", service.featured ? "text-gold-300" : "text-gold-700"]}>
-              {service.price}
-            </span>
+          <div class="mt-7 flex items-center justify-between border-t border-wine-100 pt-5">
+            <span class="text-[0.68rem] font-semibold tracking-[0.22em] text-gold-700 uppercase">{service.price}</span>
             <a
               href={service.anchor ?? waLink(`Olá! Gostaria de saber mais sobre ${service.name}.`)}
               target={service.anchor ? undefined : "_blank"}
               rel={service.anchor ? undefined : "noopener"}
-              class:list={[
-                "inline-flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[0.14em] uppercase transition-all duration-300",
-                service.featured ? "text-white hover:text-gold-300" : "text-wine-700 hover:text-wine-800",
-              ]}
+              class="inline-flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[0.14em] text-wine-700 uppercase transition-all duration-300 hover:text-wine-800"
             >
               {service.anchor ? "Ver detalhes" : "Agendar"}
               <svg class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
