@@ -194,7 +194,7 @@ export const hifu = {
   title: "Sonofocus HIFU: lifting sem cortes nem agulhas",
   intro:
     "O Sonofocus HIFU utiliza ultrassom microfocado para tratar as camadas profundas da pele com segurança. Ele contrai as fibras de colágeno já existentes e estimula a produção de colágeno novo, unindo efeito lifting imediato a resultados que evoluem por meses.",
-  image: images.atendimento,
+  image: "/hifu-procedimento.jpeg",
   advantages: [
     { title: "Não invasivo", text: "Sem cortes, cicatrizes ou anestesia geral." },
     { title: "Retorno imediato", text: "Você volta à rotina no mesmo dia, sem recuperação." },
@@ -265,34 +265,46 @@ export const steps = [
 // ------------------------------------------------------------
 export const beforeAfter = [
   {
-    title: "Harmonização Facial",
-    subtitle: "Equilíbrio e naturalidade para o rosto",
-    image: "/resultados/resultado-harmonizacao.jpeg",
+    title: "Tecnologia HIFU",
+    subtitle: "Efeito lifting e rugas do olhar suavizadas",
+    image: "/resultados/resultado-hifu.jpeg",
+    w: 415,
+    h: 739,
   },
   {
     title: "Preenchimento Labial",
     subtitle: "Volume e contorno com resultado natural",
     image: "/resultados/resultado-labial.jpeg",
+    w: 1600,
+    h: 1600,
   },
   {
     title: "Toxina Botulínica",
     subtitle: "Linhas da testa suavizadas",
     image: "/resultados/resultado-botox.jpeg",
+    w: 1518,
+    h: 1518,
   },
   {
     title: "Tratamento de Olheiras",
     subtitle: "Área dos olhos descansada e iluminada",
     image: "/resultados/resultado-olheiras.jpeg",
+    w: 1280,
+    h: 1280,
   },
   {
     title: "Redução de Papada",
     subtitle: "Contorno do queixo e do pescoço mais firme",
     image: "/resultados/resultado-papada.jpeg",
+    w: 1280,
+    h: 1280,
   },
   {
     title: "Rejuvenescimento de Pele",
     subtitle: "Textura e viço renovados",
     image: "/resultados/resultado-pele.jpeg",
+    w: 1280,
+    h: 1280,
   },
 ];
 
