@@ -641,17 +641,6 @@ html.intro-active .hero-img-reveal {
 }
 
 /* ============================================================
-   Mapa com tom editorial (cor volta no hover)
-   ============================================================ */
-.map-tint {
-  filter: grayscale(0.85) sepia(0.22) saturate(1.15);
-  transition: filter 0.6s;
-}
-.map-tint:hover {
-  filter: none;
-}
-
-/* ============================================================
    Movimento reduzido: desliga os efeitos decorativos
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {

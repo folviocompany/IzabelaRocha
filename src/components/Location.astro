@@ -1,4 +1,4 @@
-﻿---
+---
 import { site, waLink } from "../data/site";
 ---
 
@@ -6,7 +6,7 @@ import { site, waLink } from "../data/site";
   <div class="mx-auto grid max-w-6xl items-center gap-14 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
     <!-- Informações -->
     <div>
-      <p class="eyebrow text-gold-700" data-reveal>Localização</p>
+      <p class="eyebrow text-gold-700" data-reveal>Localização & Contato</p>
       <h2 class="font-display mt-5 text-3xl font-medium text-wine-900 sm:text-[2.6rem] sm:leading-tight" data-split>
         Um espaço pensado para <em class="text-wine-700 italic">o seu bem-estar</em>
       </h2>
@@ -23,16 +23,11 @@ import { site, waLink } from "../data/site";
           <div>
             <h3 class="text-sm font-semibold tracking-[0.12em] text-wine-900 uppercase">Endereço</h3>
             <p class="mt-1.5 text-[0.95rem] leading-relaxed font-light text-ink/65">
-              {site.address.street}<br />
-              {site.address.district}, {site.address.city}<br />
-              CEP {site.address.zip}
+              {site.address.street}
             </p>
-            <a href={site.mapsLink} target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[0.14em] text-gold-700 uppercase transition-colors hover:text-wine-700">
-              Como chegar
-              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M7 17L17 7M9 7h8v8" />
-              </svg>
-            </a>
+            <p class="mt-1 text-[0.8rem] font-light text-ink/45 italic">
+              Endereço completo enviado na confirmação do agendamento.
+            </p>
           </div>
         </div>
 
@@ -56,30 +51,52 @@ import { site, waLink } from "../data/site";
             </dl>
           </div>
         </div>
-
-        <!-- Contato -->
-        <div class="flex flex-wrap gap-4 pt-2">
-          <a href={waLink()} target="_blank" rel="noopener" class="btn btn-wine !px-6 !py-3">WhatsApp</a>
-          <a href={site.instagram} target="_blank" rel="noopener" class="btn !px-6 !py-3 border border-wine-200 text-wine-700 hover:border-gold-400 hover:text-gold-700">
-            Instagram
-          </a>
-        </div>
       </div>
     </div>
 
-    <!-- Mapa -->
+    <!-- Card de agendamento (substitui o mapa) -->
     <div class="relative" data-reveal style="--reveal-delay: 0.15s">
       <div class="absolute -inset-3 -translate-x-4 translate-y-4 rounded-3xl border border-gold-400/50" aria-hidden="true"></div>
-      <div class="relative overflow-hidden rounded-3xl shadow-[0_35px_70px_-30px_rgba(46,8,19,0.35)]">
-        <iframe
-          src={site.mapsEmbed}
-          title={`Mapa com a localização de ${site.name}`}
-          class="map-tint h-[26rem] w-full border-0 lg:h-[30rem]"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen
+      <div class="grain relative overflow-hidden rounded-3xl bg-gradient-to-br from-wine-700 to-wine-900 p-10 text-white shadow-[0_35px_70px_-30px_rgba(46,8,19,0.5)] sm:p-12">
+        <!-- Brilho decorativo -->
+        <div
+          class="pointer-events-none absolute -top-20 -right-16 h-64 w-64 rounded-full opacity-25 blur-3xl"
+          style="background: radial-gradient(circle, rgba(201,162,39,0.7) 0%, transparent 65%)"
+          aria-hidden="true"
         >
-        </iframe>
+        </div>
+
+        <span class="relative grid h-14 w-14 place-items-center rounded-2xl bg-white/10 text-gold-300" aria-hidden="true">
+          <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4.5" width="18" height="16" rx="2.5" />
+            <path d="M3 9h18M8 3v3M16 3v3M8 13h3M8 16.5h6" />
+          </svg>
+        </span>
+
+        <h3 class="font-display relative mt-6 text-2xl font-medium text-white sm:text-[1.7rem]">
+          Atendimento com hora marcada
+        </h3>
+        <p class="relative mt-4 text-[0.95rem] leading-relaxed font-light text-white/70">
+          Cada horário é reservado para dedicar a você toda a atenção que merece. Envie
+          uma mensagem e escolha o melhor momento para a sua avaliação.
+        </p>
+
+        <div class="relative mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a href={waLink()} target="_blank" rel="noopener" class="btn btn-gold">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35M12.04 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.4 9.4 0 0 1-1.45-5.03c0-5.21 4.25-9.45 9.47-9.45a9.4 9.4 0 0 1 6.69 2.77 9.4 9.4 0 0 1 2.77 6.7c0 5.21-4.25 9.44-9.46 9.44m8.05-17.5A11.3 11.3 0 0 0 12.03.68C5.77.68.68 5.77.68 12.02c0 2 .52 3.95 1.52 5.67L.6 23.5l5.94-1.56a11.35 11.35 0 0 0 5.48 1.4h.01c6.26 0 11.35-5.1 11.35-11.35 0-3.03-1.18-5.88-3.32-8.02" />
+            </svg>
+            Agendar pelo WhatsApp
+          </a>
+          <a href={site.instagram} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-medium text-white/70 transition-colors hover:text-gold-300">
+            <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+            </svg>
+            {site.instagramHandle}
+          </a>
+        </div>
       </div>
     </div>
   </div>

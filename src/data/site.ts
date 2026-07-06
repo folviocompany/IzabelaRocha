@@ -13,40 +13,30 @@ export const site = {
   description:
     "Estética avançada e harmonização facial com resultados naturais. Toxina botulínica, bioestimulador, fios de PDO, tecnologia HIFU e mais. Agende sua avaliação.",
 
-  // TODO: número real da cliente (formato: 55 + DDD + número, só dígitos)
-  whatsapp: "5500000000000",
+  whatsapp: "5567992093403",
   whatsappMessage: "Olá! Gostaria de agendar uma avaliação.",
 
   // TODO: redes sociais reais
   instagram: "https://instagram.com/draizabelarocha",
   instagramHandle: "@draizabelarocha",
 
-  // TODO: endereço real
+  // Endereço completo é enviado no agendamento; no site mostramos só a rua
   address: {
-    street: "Av. Exemplo, 1234, Sala 56",
-    district: "Centro",
-    city: "Sua Cidade, UF",
-    zip: "00000-000",
+    street: "Avenida Afonso Pena",
   },
 
-  // TODO: horário real
   hours: [
     { days: "Segunda a sexta", time: "9h às 19h" },
-    { days: "Sábado", time: "9h às 14h" },
+    { days: "Sábado", time: "9h30 às 13h" },
     { days: "Domingo", time: "Fechado" },
   ],
-
-  // TODO: trocar pelo embed do endereço real (Google Maps > Compartilhar > Incorporar mapa)
-  mapsEmbed:
-    "https://www.google.com/maps?q=Avenida+Paulista,+S%C3%A3o+Paulo&output=embed",
-  mapsLink: "https://www.google.com/maps?q=Avenida+Paulista,+S%C3%A3o+Paulo",
 
   register: "Biomédica Esteta, CRBM 62108",
 
   stats: [
     { prefix: "+", value: 2500, decimals: 0, label: "pacientes atendidos" },
-    // TODO: confirmar estes dois números com a cliente
-    { prefix: "+", value: 10, decimals: 0, label: "anos de experiência" },
+    { prefix: "+", value: 3, decimals: 0, label: "anos de experiência" },
+    // TODO: confirmar a nota de avaliação com a cliente
     { prefix: "", value: 5, decimals: 1, label: "avaliação das pacientes" },
   ],
 };

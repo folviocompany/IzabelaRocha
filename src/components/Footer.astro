@@ -77,10 +77,7 @@ const nav = [
       <div>
         <h3 class="text-xs font-semibold tracking-[0.24em] text-gold-400 uppercase">Contato</h3>
         <ul class="mt-5 space-y-3 text-sm font-light text-white/55">
-          <li>
-            {site.address.street}<br />
-            {site.address.district}, {site.address.city}
-          </li>
+          <li>{site.address.street}</li>
           <li>
             <a href={waLink()} target="_blank" rel="noopener" class="transition-colors duration-300 hover:text-gold-300">
               Atendimento via WhatsApp
