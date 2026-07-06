@@ -56,8 +56,6 @@ export const images = {
   atendimento: "/Doutora1.jpeg", // Dra. em atendimento — seção HIFU
   facial: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=900&q=80",
   corporal: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=80",
-  ambiente1: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=1200&q=80",
-  ambiente2: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=1200&q=80",
   avatar1: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80",
   avatar2: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80",
   avatar3: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80",
