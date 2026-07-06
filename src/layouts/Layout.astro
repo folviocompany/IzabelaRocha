@@ -12,12 +12,15 @@ const {
   description = site.description,
 } = Astro.props;
 
+// OG/JSON-LD precisam de URL absoluta para os crawlers das redes sociais
+const ogImage = images.og.startsWith("http") ? images.og : `${site.siteUrl}${images.og}`;
+
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BeautySalon",
   name: site.name,
   description: site.description,
-  image: images.og,
+  image: ogImage,
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address.street,
@@ -47,11 +50,11 @@ const jsonLd = JSON.stringify({
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={images.og} />
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={images.og} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
