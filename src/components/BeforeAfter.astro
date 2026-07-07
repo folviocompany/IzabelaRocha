@@ -28,7 +28,8 @@ import { beforeAfter, waLink } from "../data/site";
     <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {beforeAfter.map((item, i) => (
         <figure data-reveal style={`--reveal-delay: ${(i % 3) * 0.1}s`}>
-          <div class="ba aspect-square rounded-2xl ring-1 ring-gold-500/30" data-compare>
+          <div class="ba aspect-square rounded-2xl bg-wine-950 ring-1 ring-gold-500/30" data-compare>
+            <img class="ba-fill" src={item.before} alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <img class="ba-before" src={item.before} alt={`Antes: ${item.title}`} loading="lazy" decoding="async" />
             <img class="ba-after" src={item.after} alt={`Depois: ${item.title}`} loading="lazy" decoding="async" />
             <span class="pointer-events-none absolute top-3 left-3 z-10 rounded-full bg-wine-950/70 px-3 py-1 text-[0.6rem] font-bold tracking-[0.18em] text-white/85 uppercase backdrop-blur-sm">Antes</span>

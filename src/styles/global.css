@@ -204,9 +204,20 @@ main {
   inset: 0;
   height: 100%;
   width: 100%;
-  object-fit: cover;
   pointer-events: none;
   user-select: none;
+}
+/* Preenche o quadrado com uma versão suave da foto (fotos verticais não são cortadas) */
+.ba-fill {
+  object-fit: cover;
+  transform: scale(1.2);
+  filter: blur(22px);
+  opacity: 0.5;
+}
+/* Antes e depois aparecem inteiros, sem corte do rosto */
+.ba-before,
+.ba-after {
+  object-fit: contain;
 }
 .ba-after {
   clip-path: inset(0 0 0 var(--pos));
