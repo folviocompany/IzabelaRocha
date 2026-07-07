@@ -257,44 +257,59 @@ export const steps = [
 
 // ------------------------------------------------------------
 // Antes & Depois — casos reais (arrastar para comparar).
-// Cada item tem foto de antes e de depois do mesmo caso.
+// layout agrupa os cards por formato da foto, para a grade
+// respeitar a proporção natural de cada caso (sem cortes).
 // ------------------------------------------------------------
-export const beforeAfter = [
+export interface BeforeAfterCase {
+  title: string;
+  subtitle: string;
+  before: string;
+  after: string;
+  layout: "portrait" | "square" | "wide";
+}
+
+export const beforeAfter: BeforeAfterCase[] = [
   {
     title: "Harmonização Facial",
     subtitle: "Contorno e perfil mais harmônicos",
     before: "/resultados/harmoni-antes.jpeg",
     after: "/resultados/harmoni-depois.jpeg",
-  },
-  {
-    title: "Toxina Botulínica",
-    subtitle: "Linhas da testa suavizadas",
-    before: "/resultados/toxina-antes.jpeg",
-    after: "/resultados/toxina-depois.jpeg",
-  },
-  {
-    title: "Tecnologia HIFU",
-    subtitle: "Rugas do olhar suavizadas",
-    before: "/resultados/hifu-antes.jpeg",
-    after: "/resultados/hifu-depois.jpeg",
+    layout: "portrait",
   },
   {
     title: "Tratamento de Olheiras",
     subtitle: "Área dos olhos descansada",
     before: "/resultados/olheiras-antes.jpeg",
     after: "/resultados/olheiras-depois.jpeg",
+    layout: "portrait",
   },
   {
     title: "Redução de Papada",
-    subtitle: "Contorno do queixo e do pescoço mais firme",
+    subtitle: "Contorno mais firme",
     before: "/resultados/papada-antes.jpeg",
     after: "/resultados/papada-depois.jpeg",
+    layout: "portrait",
   },
   {
     title: "Rejuvenescimento de Pele",
     subtitle: "Textura e viço renovados",
     before: "/resultados/rejuve-antes.jpeg",
     after: "/resultados/rejuve-depois.jpeg",
+    layout: "portrait",
+  },
+  {
+    title: "Tecnologia HIFU",
+    subtitle: "Rugas do olhar suavizadas",
+    before: "/resultados/hifu-antes.jpeg",
+    after: "/resultados/hifu-depois.jpeg",
+    layout: "square",
+  },
+  {
+    title: "Toxina Botulínica",
+    subtitle: "Linhas da testa suavizadas",
+    before: "/resultados/toxina-antes.jpeg",
+    after: "/resultados/toxina-depois.jpeg",
+    layout: "wide",
   },
 ];
 

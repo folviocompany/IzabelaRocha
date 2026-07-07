@@ -1,5 +1,9 @@
 ---
 import { beforeAfter, waLink } from "../data/site";
+
+const portraits = beforeAfter.filter((c) => c.layout === "portrait");
+const square = beforeAfter.find((c) => c.layout === "square");
+const wide = beforeAfter.find((c) => c.layout === "wide");
 ---
 
 <section id="resultados" class="grain relative overflow-hidden bg-wine-950 py-24 lg:py-32">
@@ -25,15 +29,15 @@ import { beforeAfter, waLink } from "../data/site";
       </p>
     </div>
 
-    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {beforeAfter.map((item, i) => (
-        <figure data-reveal style={`--reveal-delay: ${(i % 3) * 0.1}s`}>
-          <div class="ba aspect-square rounded-2xl bg-wine-950 ring-1 ring-gold-500/30" data-compare>
-            <img class="ba-fill" src={item.before} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+    <!-- Casos verticais: cards na proporção natural das fotos -->
+    <div class="mt-16 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+      {portraits.map((item, i) => (
+        <figure data-reveal style={`--reveal-delay: ${(i % 4) * 0.08}s`}>
+          <div class="ba aspect-[1/2] rounded-2xl ring-1 ring-gold-500/30" data-compare>
             <img class="ba-before" src={item.before} alt={`Antes: ${item.title}`} loading="lazy" decoding="async" />
             <img class="ba-after" src={item.after} alt={`Depois: ${item.title}`} loading="lazy" decoding="async" />
-            <span class="pointer-events-none absolute top-3 left-3 z-10 rounded-full bg-wine-950/70 px-3 py-1 text-[0.6rem] font-bold tracking-[0.18em] text-white/85 uppercase backdrop-blur-sm">Antes</span>
-            <span class="pointer-events-none absolute top-3 right-3 z-10 rounded-full bg-gold-500/90 px-3 py-1 text-[0.6rem] font-bold tracking-[0.18em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
+            <span class="pointer-events-none absolute top-3 left-3 z-10 rounded-full bg-wine-950/70 px-2.5 py-1 text-[0.58rem] font-bold tracking-[0.16em] text-white/85 uppercase backdrop-blur-sm">Antes</span>
+            <span class="pointer-events-none absolute top-3 right-3 z-10 rounded-full bg-gold-500/90 px-2.5 py-1 text-[0.58rem] font-bold tracking-[0.16em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
             <div class="ba-divider">
               <div class="ba-handle">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -44,8 +48,40 @@ import { beforeAfter, waLink } from "../data/site";
             <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois de ${item.title}`} />
           </div>
           <figcaption class="mt-4 px-1">
-            <p class="font-display text-lg text-white">{item.title}</p>
-            <p class="mt-1 text-sm font-light text-white/50">{item.subtitle}</p>
+            <p class="font-display text-base text-white sm:text-lg">{item.title}</p>
+            <p class="mt-1 text-xs font-light text-white/60 sm:text-sm">{item.subtitle}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <!-- Casos horizontais: HIFU (quadrado) + Toxina (largo) -->
+    <div class="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-3">
+      {[square, wide].filter(Boolean).map((item) => (
+        <figure class:list={[item!.layout === "wide" ? "lg:col-span-2" : ""]} data-reveal>
+          <div
+            class:list={[
+              "ba rounded-2xl ring-1 ring-gold-500/30",
+              item!.layout === "wide" ? "aspect-[2/1] lg:aspect-[2.07/1]" : "aspect-square",
+            ]}
+            data-compare
+          >
+            <img class="ba-before" src={item!.before} alt={`Antes: ${item!.title}`} loading="lazy" decoding="async" />
+            <img class="ba-after" src={item!.after} alt={`Depois: ${item!.title}`} loading="lazy" decoding="async" />
+            <span class="pointer-events-none absolute top-3 left-3 z-10 rounded-full bg-wine-950/70 px-2.5 py-1 text-[0.58rem] font-bold tracking-[0.16em] text-white/85 uppercase backdrop-blur-sm">Antes</span>
+            <span class="pointer-events-none absolute top-3 right-3 z-10 rounded-full bg-gold-500/90 px-2.5 py-1 text-[0.58rem] font-bold tracking-[0.16em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
+            <div class="ba-divider">
+              <div class="ba-handle">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M10 8l-4 4 4 4M14 8l4 4-4 4" />
+                </svg>
+              </div>
+            </div>
+            <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois de ${item!.title}`} />
+          </div>
+          <figcaption class="mt-4 px-1">
+            <p class="font-display text-base text-white sm:text-lg">{item!.title}</p>
+            <p class="mt-1 text-xs font-light text-white/60 sm:text-sm">{item!.subtitle}</p>
           </figcaption>
         </figure>
       ))}
