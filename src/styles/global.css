@@ -190,6 +190,63 @@ main {
 }
 
 /* ============================================================
+   Slider Antes & Depois (arrastar para comparar duas fotos)
+   ============================================================ */
+.ba {
+  --pos: 50%;
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+}
+.ba img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+.ba-after {
+  clip-path: inset(0 0 0 var(--pos));
+}
+.ba-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 2px;
+  background: var(--color-gold-400);
+  transform: translateX(-1px);
+  pointer-events: none;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.45);
+}
+.ba-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: var(--color-gold-500);
+  color: var(--color-wine-950);
+  box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.6);
+}
+.ba-range {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  cursor: ew-resize;
+  opacity: 0;
+}
+
+/* ============================================================
    FAQ (accordion)
    ============================================================ */
 .faq-answer {

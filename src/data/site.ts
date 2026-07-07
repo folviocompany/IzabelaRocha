@@ -258,51 +258,45 @@ export const steps = [
 ];
 
 // ------------------------------------------------------------
-// Antes & Depois — OBRIGATÓRIO trocar por casos reais com
-// autorização assinada antes de publicar em produção.
+// Antes & Depois — casos reais (arrastar para comparar).
+// Cada item tem foto de antes e de depois do mesmo caso.
 // ------------------------------------------------------------
 export const beforeAfter = [
   {
-    title: "Tecnologia HIFU",
-    subtitle: "Efeito lifting e rugas do olhar suavizadas",
-    image: "/resultados/resultado-hifu.jpeg",
-    w: 415,
-    h: 739,
-  },
-  {
-    title: "Preenchimento Labial",
-    subtitle: "Volume e contorno com resultado natural",
-    image: "/resultados/resultado-labial.jpeg",
-    w: 1600,
-    h: 1600,
+    title: "Harmonização Facial",
+    subtitle: "Contorno e perfil mais harmônicos",
+    before: "/resultados/harmoni-antes.jpeg",
+    after: "/resultados/harmoni-depois.jpeg",
   },
   {
     title: "Toxina Botulínica",
     subtitle: "Linhas da testa suavizadas",
-    image: "/resultados/resultado-botox.jpeg",
-    w: 1518,
-    h: 1518,
+    before: "/resultados/toxina-antes.jpeg",
+    after: "/resultados/toxina-depois.jpeg",
+  },
+  {
+    title: "Tecnologia HIFU",
+    subtitle: "Rugas do olhar suavizadas",
+    before: "/resultados/hifu-antes.jpeg",
+    after: "/resultados/hifu-depois.jpeg",
   },
   {
     title: "Tratamento de Olheiras",
-    subtitle: "Área dos olhos descansada e iluminada",
-    image: "/resultados/resultado-olheiras.jpeg",
-    w: 1280,
-    h: 1280,
+    subtitle: "Área dos olhos descansada",
+    before: "/resultados/olheiras-antes.jpeg",
+    after: "/resultados/olheiras-depois.jpeg",
   },
   {
     title: "Redução de Papada",
     subtitle: "Contorno do queixo e do pescoço mais firme",
-    image: "/resultados/resultado-papada.jpeg",
-    w: 1280,
-    h: 1280,
+    before: "/resultados/papada-antes.jpeg",
+    after: "/resultados/papada-depois.jpeg",
   },
   {
     title: "Rejuvenescimento de Pele",
     subtitle: "Textura e viço renovados",
-    image: "/resultados/resultado-pele.jpeg",
-    w: 1280,
-    h: 1280,
+    before: "/resultados/rejuve-antes.jpeg",
+    after: "/resultados/rejuve-depois.jpeg",
   },
 ];
 

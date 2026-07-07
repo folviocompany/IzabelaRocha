@@ -20,32 +20,27 @@ import { beforeAfter, waLink } from "../data/site";
         Resultados que falam <em class="gold-text gold-shimmer italic">por si</em>
       </h2>
       <p class="mt-5 text-base leading-relaxed font-light text-white/60">
-        Casos reais de pacientes. Cada resultado é fruto de avaliação criteriosa,
-        técnica apurada e respeito às características de cada pessoa.
+        Arraste a linha para comparar o antes e o depois. Casos reais de pacientes,
+        fruto de avaliação criteriosa e técnica apurada.
       </p>
     </div>
 
     <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {beforeAfter.map((item, i) => (
-        <figure class="group" data-reveal style={`--reveal-delay: ${(i % 3) * 0.1}s`}>
-          <div class="relative aspect-square overflow-hidden rounded-2xl bg-wine-950 ring-1 ring-gold-500/30 transition-all duration-500 group-hover:ring-gold-400/70">
-            <!-- Preenche o quadrado com uma versão suave da própria foto (fotos verticais não ficam com barras vazias) -->
-            <img
-              src={item.image}
-              alt=""
-              aria-hidden="true"
-              class="absolute inset-0 z-0 h-full w-full scale-125 object-cover opacity-60 blur-2xl"
-            />
-            <img
-              src={item.image}
-              alt={`Resultado de antes e depois: ${item.title}`}
-              class="relative z-10 h-full w-full object-contain transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
-              width={item.w}
-              height={item.h}
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-wine-950/45 via-transparent to-transparent"></div>
+        <figure data-reveal style={`--reveal-delay: ${(i % 3) * 0.1}s`}>
+          <div class="ba aspect-square rounded-2xl ring-1 ring-gold-500/30" data-compare>
+            <img class="ba-before" src={item.before} alt={`Antes: ${item.title}`} loading="lazy" decoding="async" />
+            <img class="ba-after" src={item.after} alt={`Depois: ${item.title}`} loading="lazy" decoding="async" />
+            <span class="pointer-events-none absolute top-3 left-3 z-10 rounded-full bg-wine-950/70 px-3 py-1 text-[0.6rem] font-bold tracking-[0.18em] text-white/85 uppercase backdrop-blur-sm">Antes</span>
+            <span class="pointer-events-none absolute top-3 right-3 z-10 rounded-full bg-gold-500/90 px-3 py-1 text-[0.6rem] font-bold tracking-[0.18em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
+            <div class="ba-divider">
+              <div class="ba-handle">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M10 8l-4 4 4 4M14 8l4 4-4 4" />
+                </svg>
+              </div>
+            </div>
+            <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois de ${item.title}`} />
           </div>
           <figcaption class="mt-4 px-1">
             <p class="font-display text-lg text-white">{item.title}</p>
@@ -67,3 +62,45 @@ import { beforeAfter, waLink } from "../data/site";
     </div>
   </div>
 </section>
+
+<script>
+  // Cada slider: o input range invisível controla a posição do corte (--pos)
+  let interacted = false;
+  document.querySelectorAll<HTMLElement>("[data-compare]").forEach((frame) => {
+    const range = frame.querySelector<HTMLInputElement>(".ba-range");
+    const setPos = () => frame.style.setProperty("--pos", `${range!.value}%`);
+    range?.addEventListener("input", () => {
+      interacted = true;
+      setPos();
+    });
+    range?.addEventListener("pointerdown", () => (interacted = true), { once: true });
+  });
+
+  // Dica de uso: o primeiro slider desliza sozinho uma vez ao entrar na tela
+  const firstFrame = document.querySelector<HTMLElement>("[data-compare]");
+  if (firstFrame && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const hintIo = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        hintIo.disconnect();
+        if (interacted) return;
+        const range = firstFrame.querySelector<HTMLInputElement>(".ba-range")!;
+        setTimeout(() => {
+          const start = performance.now();
+          const duration = 1800;
+          const tick = (now: number) => {
+            if (interacted) return;
+            const p = Math.min(1, (now - start) / duration);
+            const v = 50 + Math.sin(p * Math.PI * 2) * 22 * Math.sin(p * Math.PI);
+            firstFrame.style.setProperty("--pos", `${v}%`);
+            range.value = String(v);
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }, 600);
+      },
+      { threshold: 0.55 }
+    );
+    hintIo.observe(firstFrame);
+  }
+</script>
