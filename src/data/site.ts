@@ -277,13 +277,6 @@ export const beforeAfter: BeforeAfterCase[] = [
     layout: "portrait",
   },
   {
-    title: "Harmonização Facial",
-    subtitle: "Contorno e perfil mais harmônicos",
-    before: "/resultados/harmoni-antes.jpeg",
-    after: "/resultados/harmoni-depois.jpeg",
-    layout: "portrait",
-  },
-  {
     title: "Preenchimento Labial",
     subtitle: "Volume e contorno delicados",
     before: "/resultados/boca-antes.jpeg",
@@ -330,6 +323,13 @@ export const beforeAfter: BeforeAfterCase[] = [
     subtitle: "Perfil nasal mais harmônico",
     before: "/resultados/rino-antes.jpeg",
     after: "/resultados/rino-depois.jpeg",
+    layout: "portrait",
+  },
+  {
+    title: "Harmonização Facial",
+    subtitle: "Contorno e perfil mais harmônicos",
+    before: "/resultados/harmoni-antes.jpeg",
+    after: "/resultados/harmoni-depois.jpeg",
     layout: "portrait",
   },
   {
