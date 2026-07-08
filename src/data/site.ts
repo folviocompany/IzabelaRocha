@@ -319,6 +319,13 @@ export const beforeAfter: BeforeAfterCase[] = [
     layout: "portrait",
   },
   {
+    title: "Rinomodelação",
+    subtitle: "Perfil nasal mais harmônico",
+    before: "/resultados/rino-antes.jpeg",
+    after: "/resultados/rino-depois.jpeg",
+    layout: "portrait",
+  },
+  {
     title: "Tecnologia HIFU",
     subtitle: "Rugas do olhar suavizadas",
     before: "/resultados/hifu-antes.jpeg",

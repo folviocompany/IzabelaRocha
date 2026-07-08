@@ -29,9 +29,9 @@ const horizontalCases = beforeAfter.filter((c) => c.layout === "square" || c.lay
     </div>
 
     <!-- Casos verticais: cards na proporção natural das fotos -->
-    <div class="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {verticalCases.map((item, i) => (
-        <figure data-reveal style={`--reveal-delay: ${(i % 3) * 0.08}s`}>
+        <figure data-reveal style={`--reveal-delay: ${(i % 4) * 0.08}s`}>
           <div
             class:list={[
               "ba rounded-2xl ring-1 ring-gold-500/30",
