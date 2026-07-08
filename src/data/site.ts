@@ -277,6 +277,20 @@ export const beforeAfter: BeforeAfterCase[] = [
     layout: "portrait",
   },
   {
+    title: "Preenchimento Labial",
+    subtitle: "Volume e contorno delicados",
+    before: "/resultados/boca-antes.jpeg",
+    after: "/resultados/boca-depois.jpeg",
+    layout: "portrait",
+  },
+  {
+    title: "Toxina Botulínica",
+    subtitle: "Linhas da testa suavizadas",
+    before: "/resultados/toxina-antes.jpeg",
+    after: "/resultados/toxina-depois.jpeg",
+    layout: "portrait",
+  },
+  {
     title: "Tratamento de Olheiras",
     subtitle: "Área dos olhos descansada",
     before: "/resultados/olheiras-antes.jpeg",
@@ -305,25 +319,11 @@ export const beforeAfter: BeforeAfterCase[] = [
     layout: "portrait",
   },
   {
-    title: "Preenchimento Labial",
-    subtitle: "Volume e contorno delicados",
-    before: "/resultados/boca-antes.jpeg",
-    after: "/resultados/boca-depois.jpeg",
-    layout: "portrait",
-  },
-  {
     title: "Tecnologia HIFU",
     subtitle: "Rugas do olhar suavizadas",
     before: "/resultados/hifu-antes.jpeg",
     after: "/resultados/hifu-depois.jpeg",
     layout: "square",
-  },
-  {
-    title: "Toxina Botulínica",
-    subtitle: "Linhas da testa suavizadas",
-    before: "/resultados/toxina-antes.jpeg",
-    after: "/resultados/toxina-depois.jpeg",
-    layout: "wide",
   },
 ];
 

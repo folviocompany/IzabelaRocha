@@ -2,8 +2,7 @@
 import { beforeAfter, waLink } from "../data/site";
 
 const verticalCases = beforeAfter.filter((c) => c.layout === "portrait" || c.layout === "tall");
-const square = beforeAfter.find((c) => c.layout === "square");
-const wide = beforeAfter.find((c) => c.layout === "wide");
+const horizontalCases = beforeAfter.filter((c) => c.layout === "square" || c.layout === "wide");
 ---
 
 <section id="resultados" class="grain relative overflow-hidden bg-wine-950 py-24 lg:py-32">
@@ -62,8 +61,8 @@ const wide = beforeAfter.find((c) => c.layout === "wide");
     </div>
 
     <!-- Casos horizontais: HIFU + Toxina em cards equilibrados no desktop -->
-    <div class="mx-auto mt-6 grid max-w-4xl gap-6 sm:grid-cols-2">
-      {[square, wide].filter(Boolean).map((item) => (
+    <div class:list={["mx-auto mt-6 grid gap-6", horizontalCases.length === 1 ? "max-w-md" : "max-w-4xl sm:grid-cols-2"]}>
+      {horizontalCases.map((item) => (
         <figure data-reveal>
           <div
             class:list={[
@@ -72,8 +71,8 @@ const wide = beforeAfter.find((c) => c.layout === "wide");
             ]}
             data-compare
           >
-            <img class="ba-before" src={item!.before} alt={`Antes: ${item!.title}`} loading="lazy" decoding="async" />
-            <img class="ba-after" src={item!.after} alt={`Depois: ${item!.title}`} loading="lazy" decoding="async" />
+            <img class="ba-before" src={item.before} alt={`Antes: ${item.title}`} loading="lazy" decoding="async" />
+            <img class="ba-after" src={item.after} alt={`Depois: ${item.title}`} loading="lazy" decoding="async" />
             <span class="pointer-events-none absolute top-3 left-3 z-10 rounded-full bg-wine-950/70 px-2.5 py-1 text-[0.58rem] font-bold tracking-[0.16em] text-white/85 uppercase backdrop-blur-sm">Antes</span>
             <span class="pointer-events-none absolute top-3 right-3 z-10 rounded-full bg-gold-500/90 px-2.5 py-1 text-[0.58rem] font-bold tracking-[0.16em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
             <div class="ba-divider">
@@ -83,11 +82,11 @@ const wide = beforeAfter.find((c) => c.layout === "wide");
                 </svg>
               </div>
             </div>
-            <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois de ${item!.title}`} />
+            <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois de ${item.title}`} />
           </div>
           <figcaption class="mt-4 px-1">
-            <p class="font-display text-base text-white sm:text-lg">{item!.title}</p>
-            <p class="mt-1 text-xs font-light text-white/60 sm:text-sm">{item!.subtitle}</p>
+            <p class="font-display text-base text-white sm:text-lg">{item.title}</p>
+            <p class="mt-1 text-xs font-light text-white/60 sm:text-sm">{item.subtitle}</p>
           </figcaption>
         </figure>
       ))}
