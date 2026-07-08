@@ -265,7 +265,7 @@ export interface BeforeAfterCase {
   subtitle: string;
   before: string;
   after: string;
-  layout: "portrait" | "square" | "wide";
+  layout: "portrait" | "tall" | "square" | "wide";
 }
 
 export const beforeAfter: BeforeAfterCase[] = [
@@ -281,20 +281,34 @@ export const beforeAfter: BeforeAfterCase[] = [
     subtitle: "Área dos olhos descansada",
     before: "/resultados/olheiras-antes.jpeg",
     after: "/resultados/olheiras-depois.jpeg",
-    layout: "portrait",
+    layout: "tall",
   },
   {
     title: "Redução de Papada",
     subtitle: "Contorno mais firme",
     before: "/resultados/papada-antes.jpeg",
     after: "/resultados/papada-depois.jpeg",
-    layout: "portrait",
+    layout: "tall",
   },
   {
     title: "Rejuvenescimento de Pele",
     subtitle: "Textura e viço renovados",
     before: "/resultados/rejuve-antes.jpeg",
     after: "/resultados/rejuve-depois.jpeg",
+    layout: "portrait",
+  },
+  {
+    title: "Bigode Chinês",
+    subtitle: "Sulcos suavizados com naturalidade",
+    before: "/resultados/bigode-antes.jpeg",
+    after: "/resultados/bigode-depois.jpeg",
+    layout: "portrait",
+  },
+  {
+    title: "Preenchimento Labial",
+    subtitle: "Volume e contorno delicados",
+    before: "/resultados/boca-antes.jpeg",
+    after: "/resultados/boca-depois.jpeg",
     layout: "portrait",
   },
   {
