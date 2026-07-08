@@ -55,14 +55,14 @@ const wide = beforeAfter.find((c) => c.layout === "wide");
       ))}
     </div>
 
-    <!-- Casos horizontais: HIFU (quadrado) + Toxina (largo) -->
-    <div class="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-3">
+    <!-- Casos horizontais: HIFU + Toxina em cards equilibrados no desktop -->
+    <div class="mx-auto mt-6 grid max-w-4xl gap-6 sm:grid-cols-2">
       {[square, wide].filter(Boolean).map((item) => (
-        <figure class:list={[item!.layout === "wide" ? "lg:col-span-2" : ""]} data-reveal>
+        <figure data-reveal>
           <div
             class:list={[
               "ba rounded-2xl ring-1 ring-gold-500/30",
-              item!.layout === "wide" ? "aspect-[2/1] lg:aspect-[2.07/1]" : "aspect-square",
+              "aspect-[3/2]",
             ]}
             data-compare
           >
