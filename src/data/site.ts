@@ -271,6 +271,13 @@ export interface BeforeAfterCase {
 export const beforeAfter: BeforeAfterCase[] = [
   {
     title: "Harmonização Facial",
+    subtitle: "Contorno e volume mais harmônicos",
+    before: "/resultados/bigode-labial-antes.jpeg",
+    after: "/resultados/bigode-labial-depois.jpeg",
+    layout: "portrait",
+  },
+  {
+    title: "Harmonização Facial",
     subtitle: "Contorno e perfil mais harmônicos",
     before: "/resultados/harmoni-antes.jpeg",
     after: "/resultados/harmoni-depois.jpeg",
