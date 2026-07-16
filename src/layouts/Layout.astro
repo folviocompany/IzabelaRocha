@@ -110,14 +110,24 @@ const jsonLd = JSON.stringify({
       // ------ Intro de marca: cortinas abrem e liberam a entrada do hero ------
       const intro = document.getElementById("intro");
       if (intro && document.documentElement.classList.contains("intro-active")) {
-        setTimeout(() => intro.classList.add("intro-leave"), 1250);
-        setTimeout(() => {
+        const finishIntro = () => {
           intro.remove();
+        };
+
+        setTimeout(() => {
+          intro.classList.add("intro-leave");
           document.documentElement.classList.remove("intro-active");
           try {
             sessionStorage.setItem("introDone", "1");
           } catch {}
-        }, 2150);
+
+          intro.querySelector(".intro-panel-left")?.addEventListener("transitionend", finishIntro, {
+            once: true,
+          });
+        }, 900);
+
+        // Fallback para navegadores que não disparam transitionend.
+        setTimeout(finishIntro, 1800);
       } else {
         intro?.remove();
       }

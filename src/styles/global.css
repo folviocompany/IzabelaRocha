@@ -536,20 +536,30 @@ html.intro-active .hero-title .w > span,
 html.intro-active .hero-img-reveal {
   animation-play-state: paused;
 }
+html.intro-active #inicio [data-reveal].is-visible {
+  opacity: 0;
+  transform: translateY(26px);
+}
 #intro {
   position: fixed;
   inset: 0;
   z-index: 200;
   display: grid;
   place-items: center;
+  overflow: hidden;
+}
+#intro.intro-leave {
+  pointer-events: none;
 }
 .intro-panel {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 50.5%;
+  width: calc(50% + 1px);
   background: linear-gradient(160deg, var(--color-wine-950), var(--color-wine-900));
-  transition: transform 0.85s cubic-bezier(0.77, 0, 0.18, 1);
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 0.72s cubic-bezier(0.76, 0, 0.24, 1);
 }
 .intro-panel-left {
   left: 0;
@@ -558,10 +568,10 @@ html.intro-active .hero-img-reveal {
   right: 0;
 }
 #intro.intro-leave .intro-panel-left {
-  transform: translateX(-101%);
+  transform: translate3d(-101%, 0, 0);
 }
 #intro.intro-leave .intro-panel-right {
-  transform: translateX(101%);
+  transform: translate3d(101%, 0, 0);
 }
 .intro-brand {
   position: relative;
@@ -571,7 +581,8 @@ html.intro-active .hero-img-reveal {
   gap: 0.9rem;
   opacity: 0;
   animation: intro-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
-  transition: opacity 0.35s, transform 0.35s;
+  will-change: opacity, transform;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 #intro.intro-leave .intro-brand {
   opacity: 0;

@@ -35,7 +35,7 @@ export const site = {
 
   stats: [
     { prefix: "+", value: 2500, decimals: 0, label: "pacientes atendidos" },
-    { prefix: "+", value: 3, decimals: 0, label: "anos de experiência" },
+    { prefix: "+", value: 4, decimals: 0, label: "anos de experiência" },
     // TODO: confirmar a nota de avaliação com a cliente
     { prefix: "", value: 5, decimals: 1, label: "avaliação das pacientes" },
   ],
