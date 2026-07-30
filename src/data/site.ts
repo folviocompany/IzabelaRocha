@@ -13,7 +13,7 @@ export const site = {
   description:
     "Estética avançada e harmonização facial com resultados naturais. Toxina botulínica, bioestimulador, fios de PDO, tecnologia HIFU e mais. Agende sua avaliação.",
 
-  whatsapp: "5567992093403",
+  whatsapp: "556792553098",
   whatsappMessage: "Olá! Gostaria de agendar uma avaliação.",
 
   // TODO: redes sociais reais
