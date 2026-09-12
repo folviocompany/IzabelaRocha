@@ -6,6 +6,7 @@
 export const site = {
   name: "Dra. Izabela Rocha",
   shortName: "Izabela Rocha",
+  showTestimonials: false,
   tagline: "Estética Avançada",
 
   // TODO: trocar pelo domínio final quando definido (usado em canonical/OG)
@@ -26,20 +27,27 @@ export const site = {
   },
 
   hours: [
-    { days: "Segunda a sexta", time: "9h às 19h" },
-    { days: "Sábado", time: "9h30 às 13h" },
-    { days: "Domingo", time: "Fechado" },
+    { days: "Segunda a sexta", time: "9h às 19h", schema: "Mo-Fr 09:00-19:00" },
+    { days: "Sábado", time: "9h30 às 13h", schema: "Sa 09:30-13:00" },
+    { days: "Domingo", time: "Fechado", schema: null },
   ],
 
   register: "Biomédica Esteta, CRBM 62108",
 
   stats: [
-    { prefix: "+", value: 2500, decimals: 0, label: "pacientes atendidos" },
-    { prefix: "+", value: 4, decimals: 0, label: "anos de experiência" },
-    // TODO: confirmar a nota de avaliação com a cliente
-    { prefix: "", value: 5, decimals: 1, label: "avaliação das pacientes" },
+    { id: "patients", prefix: "+", value: 2500, decimals: 0, label: "pacientes atendidos" },
+    { id: "experience", prefix: "+", value: 4, decimals: 0, label: "anos de experiência" },
+    // A nota de avaliacao so deve voltar apos confirmacao de uma fonte real.
   ],
 };
+
+export const navigation = [
+  { label: "Tratamentos", href: "#tratamentos" },
+  { label: "Resultados", href: "#resultados" },
+  { label: "Sobre", href: "#sobre" },
+  ...(site.showTestimonials ? [{ label: "Depoimentos", href: "#depoimentos" }] : []),
+  { label: "Localização", href: "#localizacao" },
+];
 
 /** Monta o link do WhatsApp com mensagem pré-preenchida. */
 export function waLink(message: string = site.whatsappMessage): string {

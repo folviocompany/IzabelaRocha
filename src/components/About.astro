@@ -1,7 +1,8 @@
 ---
+import ResponsiveImage from "./ResponsiveImage.astro";
 import { site, images, about, waLink } from "../data/site";
 
-const patientsStat = site.stats.find((s) => s.label === "pacientes atendidos") ?? site.stats[0];
+const patientsStat = site.stats.find((s) => s.id === "patients") ?? site.stats[0];
 ---
 
 <section id="sobre" class="bg-cream py-24 lg:py-32">
@@ -10,8 +11,9 @@ const patientsStat = site.stats.find((s) => s.label === "pacientes atendidos") ?
     <div class="relative mx-auto w-full max-w-md" data-reveal>
       <div class="absolute -inset-3 translate-x-4 translate-y-4 rounded-3xl border border-gold-400/60" aria-hidden="true"></div>
       <div class="relative rounded-3xl shadow-[0_35px_70px_-30px_rgba(46,8,19,0.4)]" data-curtain>
-        <img
+        <ResponsiveImage
           src={images.about}
+          sizes="(min-width: 488px) 448px, calc(100vw - 40px)"
           alt={`${site.name}, responsável técnica pela clínica`}
           class="aspect-[4/5] w-full rounded-3xl object-cover"
           width="700"
@@ -46,7 +48,7 @@ const patientsStat = site.stats.find((s) => s.label === "pacientes atendidos") ?
       <!-- Bordão da marca -->
       <blockquote class="mt-9 border-l-2 border-gold-500 pl-5" data-reveal style="--reveal-delay: 0.35s">
         <p class="font-display text-2xl leading-snug text-wine-800 italic sm:text-[1.7rem]">
-          “Eu não transformo rostos. <span class="gold-text">Revelo identidades.</span>”
+          “{about.quote}”
         </p>
       </blockquote>
 

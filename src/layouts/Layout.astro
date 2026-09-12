@@ -5,16 +5,19 @@ import { site, images } from "../data/site";
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = `${site.name}, Estética Avançada e Harmonização Facial`,
   description = site.description,
+  noindex = false,
 } = Astro.props;
 
 // OG/JSON-LD precisam de URL absoluta para os crawlers das redes sociais
 const ogImage = images.og.startsWith("http") ? images.og : `${site.siteUrl}${images.og}`;
 
+const canonical = new URL(Astro.url.pathname, site.siteUrl).href;
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BeautySalon",
@@ -26,7 +29,7 @@ const jsonLd = JSON.stringify({
     streetAddress: site.address.street,
     addressCountry: "BR",
   },
-  openingHours: ["Mo-Fr 09:00-19:00", "Sa 09:30-13:00"],
+  openingHours: site.hours.flatMap((h) => h.schema ? [h.schema] : []),
   sameAs: [site.instagram],
 });
 ---
@@ -41,11 +44,12 @@ const jsonLd = JSON.stringify({
     <meta name="description" content={description} />
     <meta name="theme-color" content="#7B1E3A" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {site.siteUrl && <link rel="canonical" href={site.siteUrl} />}
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <!-- Open Graph (WhatsApp / Instagram / Facebook) -->
     <meta property="og:type" content="website" />
-    {site.siteUrl && <meta property="og:url" content={site.siteUrl} />}
+    {site.siteUrl && <meta property="og:url" content={canonical} />}
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
@@ -64,19 +68,25 @@ const jsonLd = JSON.stringify({
       rel="stylesheet"
     />
 
-    <script type="application/ld+json" set:html={jsonLd} />
+    <script is:inline type="application/ld+json" set:html={jsonLd} />
 
     <!-- Decide antes da pintura se a intro de marca roda (1x por sessão) -->
-    <script is:inline>
+    <script is:inline data-intro-enabled={!noindex}>
       (function () {
         try {
           if (
+            document.currentScript?.dataset.introEnabled !== "true" ||
             sessionStorage.getItem("introDone") ||
             window.matchMedia("(prefers-reduced-motion: reduce)").matches
           ) {
             document.documentElement.classList.add("no-intro");
           } else {
             document.documentElement.classList.add("intro-active");
+            // Libera o site mesmo se o modulo principal nao carregar.
+            setTimeout(() => {
+              document.documentElement.classList.remove("intro-active", "intro-opening");
+              document.dispatchEvent(new Event("intro-ready"));
+            }, 3000);
           }
         } catch (e) {
           document.documentElement.classList.add("no-intro");
@@ -104,225 +114,12 @@ const jsonLd = JSON.stringify({
     <div id="cursor-ring" aria-hidden="true"></div>
 
     <script>
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-      // ------ Intro de marca: cortinas abrem e liberam a entrada do hero ------
-      const intro = document.getElementById("intro");
-      if (intro && document.documentElement.classList.contains("intro-active")) {
-        const finishIntro = () => {
-          intro.remove();
-        };
-
-        setTimeout(() => {
-          intro.classList.add("intro-leave");
-          document.documentElement.classList.remove("intro-active");
-          try {
-            sessionStorage.setItem("introDone", "1");
-          } catch {}
-
-          intro.querySelector(".intro-panel-left")?.addEventListener("transitionend", finishIntro, {
-            once: true,
-          });
-        }, 900);
-
-        // Fallback para navegadores que não disparam transitionend.
-        setTimeout(finishIntro, 1800);
-      } else {
-        intro?.remove();
-      }
-
-      // ------ Divide títulos [data-split] em palavras para reveal em cascata ------
-      const splitHeading = (el: HTMLElement) => {
-        let index = 0;
-        const walk = (node: Node) => {
-          [...node.childNodes].forEach((child) => {
-            if (child.nodeType === Node.TEXT_NODE) {
-              const fragment = document.createDocumentFragment();
-              (child.textContent || "").split(/(\s+)/).forEach((part) => {
-                if (!part) return;
-                if (/^\s+$/.test(part)) {
-                  fragment.appendChild(document.createTextNode(" "));
-                  return;
-                }
-                const wrapper = document.createElement("span");
-                wrapper.className = "sw";
-                const inner = document.createElement("span");
-                inner.textContent = part;
-                inner.style.setProperty("--d", `${index++ * 0.05}s`);
-                wrapper.appendChild(inner);
-                fragment.appendChild(wrapper);
-              });
-              node.replaceChild(fragment, child);
-            } else if (child.nodeType === Node.ELEMENT_NODE) {
-              walk(child);
-            }
-          });
-        };
-        walk(el);
-      };
-      if (!reducedMotion) {
-        document.querySelectorAll<HTMLElement>("[data-split]").forEach(splitHeading);
-      }
-
-      // ------ Animações de entrada ao rolar ------
-      const revealEls = document.querySelectorAll("[data-reveal], [data-split], [data-curtain]");
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              io.unobserve(entry.target);
-            }
-          }
-        },
-        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-      );
-      revealEls.forEach((el) => io.observe(el));
-
-      // ------ Parallax sutil ao rolar ([data-parallax]) ------
-      const parallaxEls = [...document.querySelectorAll<HTMLElement>("[data-parallax]")];
-      if (parallaxEls.length && !reducedMotion) {
-        const updateParallax = () => {
-          const vh = window.innerHeight;
-          for (const el of parallaxEls) {
-            const rect = el.getBoundingClientRect();
-            const factor = parseFloat(el.dataset.parallax || "0.1");
-            el.style.transform = `translate3d(0, ${(rect.top + rect.height / 2 - vh / 2) * -factor}px, 0)`;
-          }
-        };
-        window.addEventListener("scroll", () => requestAnimationFrame(updateParallax), { passive: true });
-        updateParallax();
-      }
-
-      // ------ Parallax de mouse no hero (camadas com data-depth) ------
-      const heroSection = document.getElementById("inicio");
-      if (heroSection && finePointer && !reducedMotion) {
-        const layers = [...heroSection.querySelectorAll<HTMLElement>("[data-depth]")];
-        let nx = 0, ny = 0, cx = 0, cy = 0;
-        heroSection.addEventListener(
-          "mousemove",
-          (e) => {
-            nx = e.clientX / window.innerWidth - 0.5;
-            ny = e.clientY / window.innerHeight - 0.5;
-          },
-          { passive: true }
-        );
-        heroSection.addEventListener("mouseleave", () => {
-          nx = 0;
-          ny = 0;
-        });
-        const drift = () => {
-          cx += (nx - cx) * 0.06;
-          cy += (ny - cy) * 0.06;
-          for (const layer of layers) {
-            const depth = parseFloat(layer.dataset.depth || "10");
-            layer.style.transform = `translate3d(${cx * depth}px, ${cy * depth * 0.6}px, 0)`;
-          }
-          requestAnimationFrame(drift);
-        };
-        requestAnimationFrame(drift);
-      }
-
-      // ------ Barra de progresso de leitura ------
-      const progress = document.getElementById("scroll-progress")!;
-      const updateProgress = () => {
-        const doc = document.documentElement;
-        const max = doc.scrollHeight - doc.clientHeight;
-        progress.style.transform = `scaleX(${max > 0 ? doc.scrollTop / max : 0})`;
-      };
-      window.addEventListener("scroll", () => requestAnimationFrame(updateProgress), { passive: true });
-      updateProgress();
-
-      // ------ Contadores animados ([data-counter]) ------
-      const formatNumber = (value: number, decimals: number) =>
-        value.toLocaleString("pt-BR", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-      const animateCounter = (el: HTMLElement) => {
-        const target = parseFloat(el.dataset.target || "0");
-        const decimals = parseInt(el.dataset.decimals || "0", 10);
-        if (reducedMotion) {
-          el.textContent = formatNumber(target, decimals);
-          return;
-        }
-        const duration = 1800;
-        const start = performance.now();
-        const tick = (now: number) => {
-          const p = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = formatNumber(target * eased, decimals);
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      };
-      const counterIo = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              animateCounter(entry.target as HTMLElement);
-              counterIo.unobserve(entry.target);
-            }
-          }
-        },
-        { threshold: 0.5 }
-      );
-      document.querySelectorAll<HTMLElement>("[data-counter]").forEach((el) => counterIo.observe(el));
-
-      // ------ Cursor customizado (desktop) ------
-      if (finePointer && !reducedMotion) {
-        document.documentElement.classList.add("cc");
-        const dot = document.getElementById("cursor-dot")!;
-        const ring = document.getElementById("cursor-ring")!;
-        let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y;
-
-        window.addEventListener(
-          "mousemove",
-          (e) => {
-            x = e.clientX;
-            y = e.clientY;
-            dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-            const target = e.target as HTMLElement;
-            const interactive = target.closest?.("a, button, [role='button'], input, summary");
-            ring.classList.toggle("cc-active", !!interactive);
-            // O mapa (iframe) tem cursor próprio — esconde o customizado
-            const overIframe = target.tagName === "IFRAME";
-            dot.classList.toggle("cc-hidden", overIframe);
-            ring.classList.toggle("cc-hidden", overIframe);
-          },
-          { passive: true }
-        );
-        document.documentElement.addEventListener("mouseleave", () => {
-          dot.classList.add("cc-hidden");
-          ring.classList.add("cc-hidden");
-        });
-        document.documentElement.addEventListener("mouseenter", () => {
-          dot.classList.remove("cc-hidden");
-          ring.classList.remove("cc-hidden");
-        });
-        const followCursor = () => {
-          rx += (x - rx) * 0.16;
-          ry += (y - ry) * 0.16;
-          ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
-          requestAnimationFrame(followCursor);
-        };
-        requestAnimationFrame(followCursor);
-      }
-
-      // ------ Botões magnéticos (desktop) ------
-      if (finePointer && !reducedMotion) {
-        document.querySelectorAll<HTMLElement>(".btn").forEach((btn) => {
-          btn.addEventListener("mousemove", (e) => {
-            const rect = btn.getBoundingClientRect();
-            const mx = e.clientX - rect.left - rect.width / 2;
-            const my = e.clientY - rect.top - rect.height / 2;
-            btn.style.transition = "transform 0.15s ease-out";
-            btn.style.transform = `translate(${mx * 0.18}px, ${my * 0.3}px)`;
-          });
-          btn.addEventListener("mouseleave", () => {
-            btn.style.transition = "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)";
-            btn.style.transform = "";
-          });
-        });
-      }
+      import { initIntro } from "../scripts/intro";
+      import { initReveals } from "../scripts/reveals";
+      import { initEffects } from "../scripts/effects";
+      initIntro();
+      initReveals();
+      initEffects();
     </script>
   </body>
 </html>

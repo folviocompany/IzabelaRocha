@@ -1,0 +1,25 @@
+---
+import type { BeforeAfterCase } from "../data/site";
+import ResponsiveImage from "./ResponsiveImage.astro";
+interface Props { item: BeforeAfterCase; horizontal?: boolean; delay?: number; }
+const { item, horizontal = false, delay = 0 } = Astro.props;
+const sizes = horizontal ? "(min-width: 488px) 448px, calc(100vw - 40px)" : "(min-width: 1024px) 326px, (min-width: 640px) calc((100vw - 64px) / 2), calc(100vw - 40px)";
+---
+<figure data-reveal style={`--reveal-delay: ${delay}s`}>
+  <div class:list={["ba rounded-2xl ring-1 ring-gold-500/30", horizontal ? "aspect-[3/2]" : "aspect-[3/4]"]} data-compare>
+    <ResponsiveImage class="ba-before" src={item.before} alt={`Antes: ${item.title}`} loading="lazy" decoding="async" sizes={sizes} cropAspectRatio={horizontal ? 3 / 2 : 3 / 4} />
+    <ResponsiveImage class="ba-after" src={item.after} alt={`Depois: ${item.title}`} loading="lazy" decoding="async" sizes={sizes} cropAspectRatio={horizontal ? 3 / 2 : 3 / 4} />
+    <span class="pointer-events-none absolute top-3 left-3 z-10 rounded-full bg-wine-950/70 px-2.5 py-1 text-[0.58rem] font-bold tracking-[0.16em] text-white/85 uppercase backdrop-blur-sm">Antes</span>
+    <span class="pointer-events-none absolute top-3 right-3 z-10 rounded-full bg-gold-500/90 px-2.5 py-1 text-[0.58rem] font-bold tracking-[0.16em] text-wine-950 uppercase backdrop-blur-sm">Depois</span>
+    <div class="ba-divider" aria-hidden="true">
+      <div class="ba-handle">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 8l-4 4 4 4M14 8l4 4-4 4" /></svg>
+      </div>
+    </div>
+    <input type="range" min="0" max="100" value="50" class="ba-range" aria-label={`Comparar antes e depois de ${item.title}`} aria-valuetext="50% antes, 50% depois" disabled />
+  </div>
+  <figcaption class="mt-4 px-1">
+    <p class="font-display text-base text-white sm:text-lg">{item.title}</p>
+    <p class="mt-1 text-xs font-light text-white/60 sm:text-sm">{item.subtitle}</p>
+  </figcaption>
+</figure>

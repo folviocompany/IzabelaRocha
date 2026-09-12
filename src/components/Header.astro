@@ -1,13 +1,6 @@
 ---
-import { site, waLink } from "../data/site";
+import { navigation as nav, site, waLink } from "../data/site";
 
-const nav = [
-  { label: "Tratamentos", href: "#tratamentos" },
-  { label: "Resultados", href: "#resultados" },
-  { label: "Sobre", href: "#sobre" },
-  { label: "Depoimentos", href: "#depoimentos" },
-  { label: "Localização", href: "#localizacao" },
-];
 ---
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-500">
@@ -39,6 +32,7 @@ const nav = [
       <!-- Botão do menu mobile -->
       <button
         id="menu-toggle"
+        hidden
         class="relative z-[60] flex h-11 w-11 flex-col items-center justify-center gap-[5px] lg:hidden"
         aria-label="Abrir menu"
         aria-expanded="false"
@@ -55,6 +49,11 @@ const nav = [
 <!-- Menu mobile (tela cheia) -->
 <div
   id="mobile-menu"
+  hidden
+  inert
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu de navegação"
   class="pointer-events-none fixed inset-0 z-40 flex flex-col items-center justify-center gap-2 bg-wine-950/[0.97] opacity-0 backdrop-blur-sm transition-opacity duration-400 lg:hidden"
 >
   {nav.map((item, i) => (
@@ -84,7 +83,9 @@ const nav = [
 
   // Fundo sólido após o topo; esconde ao descer, reaparece ao subir
   let lastY = window.scrollY;
+  let scrollFrame = 0;
   const onScroll = () => {
+    scrollFrame = 0;
     const y = window.scrollY;
     header.classList.toggle("scrolled", y > 40);
     if (open) header.classList.remove("header-hidden");
@@ -92,25 +93,55 @@ const nav = [
     lastY = y;
   };
   onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", () => {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(onScroll);
+  }, { passive: true });
 
+  toggle.hidden = false;
+  const desktop = window.matchMedia("(min-width: 1024px)");
+  let previousOverflow = "";
+  const background = [...document.querySelectorAll<HTMLElement>("main, footer, #wa-teaser, body > a[aria-label]")];
+  const previousInert = new Map<HTMLElement, boolean>();
   // Menu mobile
   const setMenu = (state: boolean) => {
+    if (state === open) return;
     open = state;
+    header.classList.toggle("menu-open", state);
+    menu.hidden = !state;
+    menu.inert = !state;
+    if (state) previousOverflow = document.body.style.overflow;
+    background.forEach((element) => {
+      if (state) { previousInert.set(element, element.inert); element.inert = true; }
+      else element.inert = previousInert.get(element) ?? false;
+    });
     if (state) header.classList.remove("header-hidden");
     toggle.setAttribute("aria-expanded", String(state));
     toggle.setAttribute("aria-label", state ? "Fechar menu" : "Abrir menu");
     menu.classList.toggle("opacity-0", !state);
     menu.classList.toggle("pointer-events-none", !state);
-    document.body.style.overflow = state ? "hidden" : "";
+    document.body.style.overflow = state ? "hidden" : previousOverflow;
     // Transforma o hambúrguer em X (barras brancas sobre o painel vinho)
     (bars[0] as HTMLElement).style.transform = state ? "translateY(7px) rotate(45deg)" : "";
     (bars[1] as HTMLElement).style.opacity = state ? "0" : "1";
     (bars[2] as HTMLElement).style.transform = state ? "translateY(-7px) rotate(-45deg)" : "";
-    bars.forEach((b) => ((b as HTMLElement).style.background = state ? "#fff" : ""));
+    bars.forEach((b) => ((b as HTMLElement).style.background = state ? "#fff" : "var(--header-fg)"));
+    if (state) menu.querySelector<HTMLAnchorElement>("a")?.focus();
+    else if (!desktop.matches) toggle.focus();
   };
   toggle.addEventListener("click", () => setMenu(!open));
   menu.querySelectorAll(".mobile-link").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+
+  desktop.addEventListener("change", () => { if (desktop.matches) setMenu(false); });
+  document.addEventListener("keydown", (event) => {
+    if (!open) return;
+    if (event.key === "Escape") { event.preventDefault(); setMenu(false); return; }
+    if (event.key !== "Tab") return;
+    const focusable = [toggle, ...menu.querySelectorAll<HTMLElement>("a[href], button")];
+    const current = focusable.indexOf(document.activeElement as HTMLElement);
+    const next = (current + (event.shiftKey ? -1 : 1) + focusable.length) % focusable.length;
+    event.preventDefault();
+    focusable[next].focus();
+  });
 
   // Scrollspy: marca no menu a seção visível
   const navLinks = [...document.querySelectorAll<HTMLAnchorElement>(".nav-link")];
@@ -130,5 +161,5 @@ const nav = [
     },
     { rootMargin: "-40% 0px -55% 0px" }
   );
-  document.querySelectorAll("section[id], footer[id]").forEach((section) => spy.observe(section));
+  linkById.forEach((_, id) => { const section = document.getElementById(id); if (section) spy.observe(section); });
 </script>

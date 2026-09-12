@@ -124,11 +124,13 @@ const featuredPerks = ["Proporção e simetria", "Resultado natural", "Plano 100
 
 <script>
   // Spotlight dourado seguindo o cursor (desktop)
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     document.querySelectorAll<HTMLElement>(".spotlight-card").forEach((card) => {
       card.addEventListener(
         "mousemove",
         (e) => {
+          if (reduced.matches) return;
           const rect = card.getBoundingClientRect();
           card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
           card.style.setProperty("--my", `${e.clientY - rect.top}px`);

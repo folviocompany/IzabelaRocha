@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from "./ResponsiveImage.astro";
 import { site, images, waLink } from "../data/site";
 
 const formatStat = (value: number, decimals: number) =>
@@ -48,15 +49,15 @@ const particles = Array.from({ length: 16 }, (_, i) => ({
       </p>
       <h1 class="hero-title font-display mt-6 text-[2.6rem] leading-[1.08] font-medium text-white sm:text-6xl lg:text-[4.2rem]">
         {"Realce a beleza que".split(" ").map((word, i) => (
-          <span class="w" style={`--d:${0.3 + i * 0.07}s`}><span>{word}</span></span>
+          <Fragment><span class="w" style={`--d:${0.3 + i * 0.07}s`}><span>{word}</span></span>{" "}</Fragment>
         ))}
         <em class="italic">
           {"já existe".split(" ").map((word, i) => (
-            <span class="w" style={`--d:${0.58 + i * 0.07}s`}><span class="gold-text gold-shimmer">{word}</span></span>
+            <Fragment><span class="w" style={`--d:${0.58 + i * 0.07}s`}><span class="gold-text gold-shimmer">{word}</span></span>{" "}</Fragment>
           ))}
         </em>
         {"em você".split(" ").map((word, i) => (
-          <span class="w" style={`--d:${0.72 + i * 0.07}s`}><span>{word}</span></span>
+          <Fragment><span class="w" style={`--d:${0.72 + i * 0.07}s`}><span>{word}</span></span>{" "}</Fragment>
         ))}
       </h1>
       <p class="mt-6 max-w-xl text-base leading-relaxed font-light text-white/70 sm:text-lg" data-reveal style="--reveal-delay: 0.5s">
@@ -93,8 +94,9 @@ const particles = Array.from({ length: 16 }, (_, i) => ({
       <!-- Moldura dourada deslocada -->
       <div class="absolute -inset-3 translate-x-5 translate-y-5 rounded-b-[2rem] rounded-t-[14rem] border border-gold-500/40" aria-hidden="true"></div>
       <div class="hero-img-reveal relative aspect-[3/4] overflow-hidden rounded-b-[2rem] rounded-t-[14rem] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]" data-depth="6">
-        <img
+        <ResponsiveImage
           src={images.hero}
+          sizes="(min-width: 1024px) 448px, (min-width: 456px) 416px, calc(100vw - 40px)"
           alt="Dra. Izabela Rocha, especialista em harmonização facial"
           class="kenburns h-full w-full object-cover object-top"
           width="1086"

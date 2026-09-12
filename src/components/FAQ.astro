@@ -13,7 +13,7 @@ const faqJsonLd = JSON.stringify({
 });
 ---
 
-<script type="application/ld+json" set:html={faqJsonLd} />
+<script is:inline type="application/ld+json" set:html={faqJsonLd} />
 
 <section id="faq" class="bg-cream py-24 lg:py-32">
   <div class="mx-auto max-w-3xl px-5 lg:px-8">
@@ -26,12 +26,9 @@ const faqJsonLd = JSON.stringify({
 
     <div class="mt-14 divide-y divide-wine-100 border-y border-wine-100" data-reveal>
       {faqs.map((faq, i) => (
-        <div class="faq-item">
-          <h3>
-            <button
-              type="button"
+        <details class="faq-item" name="perguntas">
+            <summary
               class="faq-toggle flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left transition-colors duration-300 hover:text-wine-700"
-              aria-expanded="false"
               aria-controls={`faq-panel-${i}`}
               id={`faq-button-${i}`}
             >
@@ -44,34 +41,14 @@ const faqJsonLd = JSON.stringify({
                   <path d="M12 5v14M5 12h14" />
                 </svg>
               </span>
-            </button>
-          </h3>
+            </summary>
           <div class="faq-answer" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-button-${i}`}>
             <div>
               <p class="pb-6 text-[0.95rem] leading-relaxed font-light text-ink/65">{faq.answer}</p>
             </div>
           </div>
-        </div>
+        </details>
       ))}
     </div>
   </div>
 </section>
-
-<script>
-  // Accordion: abre um item por vez
-  const items = document.querySelectorAll<HTMLElement>(".faq-item");
-  items.forEach((item) => {
-    const button = item.querySelector<HTMLButtonElement>(".faq-toggle")!;
-    button.addEventListener("click", () => {
-      const isOpen = item.classList.contains("open");
-      items.forEach((other) => {
-        other.classList.remove("open");
-        other.querySelector(".faq-toggle")?.setAttribute("aria-expanded", "false");
-      });
-      if (!isOpen) {
-        item.classList.add("open");
-        button.setAttribute("aria-expanded", "true");
-      }
-    });
-  });
-</script>

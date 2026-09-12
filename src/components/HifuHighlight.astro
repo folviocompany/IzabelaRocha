@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from "./ResponsiveImage.astro";
 import { hifu, waLink } from "../data/site";
 
 // Ícones das vantagens práticas, na mesma ordem de hifu.advantages
@@ -31,8 +32,9 @@ const groups = [
       <div class="relative mx-auto w-full max-w-md">
         <div class="absolute -inset-3 -translate-x-4 translate-y-4 rounded-[2rem] border border-gold-400/60" aria-hidden="true"></div>
         <div class="relative rounded-[2rem] shadow-[0_35px_70px_-30px_rgba(46,8,19,0.45)]" data-curtain>
-          <img
+          <ResponsiveImage
             src={hifu.image}
+            sizes="(min-width: 488px) 448px, calc(100vw - 40px)"
             alt="Aplicação da tecnologia HIFU no rosto"
             class="aspect-[4/3] w-full rounded-[2rem] object-cover"
             width="1024"
