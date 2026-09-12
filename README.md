@@ -10,26 +10,30 @@ npm install     # instalar dependências
 npm run dev     # servidor local em http://localhost:4321
 npm run build   # build de produção (pasta dist/)
 npm run preview # pré-visualizar o build
+npm run validate # tipos + build + testes no navegador
 ```
 
 ## Onde trocar os dados da cliente
 
-**Tudo** que é conteúdo editável está em um único arquivo: [`src/data/site.ts`](src/data/site.ts).
+Os dados principais ficam em [`src/data/site.ts`](src/data/site.ts); os textos de apresentação também aparecem nos componentes.
 Os itens pendentes estão marcados com `TODO`:
 
 - **WhatsApp** (`site.whatsapp`) — formato `55` + DDD + número, apenas dígitos
 - **Endereço, horários, Instagram, registro profissional** (CRBM/CRO etc.)
-- **Mapa** (`site.mapsEmbed`) — no Google Maps: Compartilhar → Incorporar mapa → copiar a URL do `src`
+- **Localização** — a rua é pública; o endereço completo é enviado no agendamento
 - **Estatísticas** (anos de experiência, nº de procedimentos)
 - **Serviços, depoimentos e FAQ** — revisar textos com a cliente
 
 ## Imagens
 
-Todas as imagens são placeholders do Unsplash, centralizadas em `images` dentro de
-`src/data/site.ts`. Ao receber as fotos reais, basta salvar em `public/` e trocar as URLs.
+As fotos reais ficam em `public/` e `public/resultados/`. Os caminhos e a ordem
+dos resultados são configurados em `src/data/site.ts`. O componente
+`ResponsiveImage.astro` gera WebP em várias larguras durante o build, preservando
+os arquivos originais. Não amplie fotos pequenas esperando recuperar detalhes.
 
-> ⚠️ **Antes & Depois**: obrigatório usar casos reais com autorização assinada antes de
-> publicar. Os placeholders atuais simulam o efeito com filtro (antes = dessaturado).
+Os depoimentos provisórios ficam ocultos com `site.showTestimonials = false`.
+Substitua os relatos e retratos por material real autorizado antes de habilitar a seção.
+A nota de avaliação também depende de uma fonte confirmada.
 
 ## Notas técnicas
 
@@ -38,3 +42,13 @@ Todas as imagens são placeholders do Unsplash, centralizadas em `images` dentro
 - Tipografia: Playfair Display (títulos) + Inter (corpo), via Google Fonts.
 - SEO: meta tags, Open Graph, JSON-LD (BeautySalon) e favicon em `src/layouts/Layout.astro`.
 - Deploy: Vercel detecta Astro automaticamente (`npm run build` → `dist/`).
+
+## Revisão e publicação
+
+As melhorias estão na branch `codex/revisao-qualidade`. A main só deve receber
+um merge após a revisão da prévia e a aprovação dos testes. Publicar uma branch
+não é o mesmo que integrá-la à main; conferir o projeto/branch de produção na Vercel.
+O plano e as pendências estão em [docs/REVISAO.md](docs/REVISAO.md).
+
+Os testes usam Edge no Windows e Chromium no CI. Em outras plataformas,
+execute `npx playwright install chromium` antes de `npm test`.
